@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2020
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "KaruBot", "KaruBot.njsproj", "{748E8443-D798-4BEE-B7F4-91AE19A2D50E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{748E8443-D798-4BEE-B7F4-91AE19A2D50E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{748E8443-D798-4BEE-B7F4-91AE19A2D50E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{748E8443-D798-4BEE-B7F4-91AE19A2D50E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{748E8443-D798-4BEE-B7F4-91AE19A2D50E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {015159FF-2AA5-4213-8F2D-F909F87069AB}
+	EndGlobalSection
+EndGlobal

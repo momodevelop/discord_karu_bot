@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "@types/core-js": "^2.5.0",
+    "@types/dotenv": "^4.0.3",
+    "@types/json-query": "^2.2.0",
+    "@types/jsonfile": "^4.0.1",
+    "@types/node": "^10.11.0",
+    "@types/request-promise-native": "^1.0.15",
+    "@types/sprintf-js": "^1.1.0",
+    "app-module-path": "^2.2.0",
+    "canvas": "^2.0.0-alpha.14",
+    "discord.js": "^11.4.2",
+    "dotenv": "^6.0.0",
+    "image-downloader": "^3.4.1",
+    "jimp": "^0.5.3",
+    "json-query": "^2.2.2",
+    "jsonfile": "^5.0.0",
+    "jsonpath": "^1.0.0",
+    "merge-img": "^2.1.2",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.5",
+    "sprintf-js": "^1.1.1",
+    "typescript": "^3.0.3"
+  },
+  "name": "SuiBot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT"
+}

@@ -1,0 +1,6 @@
+.map
+run.bat
+test\
+regular_out.png
+gachi_out.png
+league_out.png

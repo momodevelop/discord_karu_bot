@@ -1,0 +1,9 @@
+node_modules/
+out/**/*
+.env
+yarn.lock
+.vs
+obj/
+package/
+bin/
+env.bat
