@@ -7,3 +7,4 @@ obj/
 package/
 bin/
 env.bat
+img/out/*.png
