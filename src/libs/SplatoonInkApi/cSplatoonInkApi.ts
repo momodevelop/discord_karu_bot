@@ -11,6 +11,17 @@ export class cSplatoonInkApi {
 		return this.callDataApi('schedules.json');
 	}
 
+	//https://splatoon2.ink/data/locale/en.json
+	public static async getLocaleEn(): Promise<any> {
+		return this.callDataApi('/locale/en.json');
+	}
+
+	//https://splatoon2.ink/data/locale/ja.json
+	public static async getLocaleJp(): Promise<any> {
+		return this.callDataApi('locale/ja.json');
+	}
+
+
 	public static async callApi(path: string, options?:any): Promise<any> {
 		let fullpath: string = path;
 		let baseOption: any = {
@@ -26,9 +37,6 @@ export class cSplatoonInkApi {
 		return this.callApi(this.dataUrl + path, { json: true });
 	}
 
-	public static async callImageApi(path: string): Promise<any> {
-		return this.callApi(this.imageUrl + path, { encoding: null });
-	}
 
 	public static get baseUrl(): string {
 		return "https://splatoon2.ink/";
@@ -38,8 +46,5 @@ export class cSplatoonInkApi {
 		return this.baseUrl + "data/";
 	}
 
-	public static get imageUrl(): string {
-		return this.baseUrl + "assets/splatnet/";
-	}
 
 }

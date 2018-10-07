@@ -1,4 +1,5 @@
 ﻿import { common } from 'common/common';
+import { RichEmbedWrapper as Rewrap } from 'responses/common/EmbedHelper';
 import { cResponseBase } from 'libs/Responder/cResponseBase';
 import { cCallbackParams } from '../cCallbackParams';
 import { rand_msg } from 'messages/MsgArrayThanks'
@@ -7,57 +8,61 @@ import { iSchedule, iCompetitiveScheduleInfo } from 'libs/SplatoonInkApi/cSplato
 import { cSplatoonInkApi } from 'libs/SplatoonInkApi/cSplatoonInkApi';
 import { Globals } from 'globals/Globals'
 import { sprintf } from 'sprintf-js';
-import { writeFileAsync, jimpWriteAsync } from 'common/promisify';
-import * as mergeImg from 'merge-img';
-import Jimp from 'jimp-custom';
 
 class cResponse extends cResponseBase {
+	private readonly color: [number, number, number] = [245, 73, 16];
+	private readonly splatoonWikiUrl: string = "https://splatoonwiki.org/wiki/";
+	private readonly imgOutputName: string = "out_gachi.jpg";
+	private readonly imgAuthor: string = "karu.png"
+	private readonly imgThumbnail: string = "gachi.png"
+	private readonly authorName: string = "Karu";
+	private readonly title: string = "(ﾉ≧∇≦)ﾉ ﾐ GACHI!!!"
 
 	public async exec(params: cCallbackParams): Promise<boolean> {
-		
-
 		let f = common.has_words;
 		let c = params.msg.content;
-		if (f(c, ["ranked", "gachi"])) {
-			params.msg.channel.send("Gimme a sec! （｀・ω・´）");
-
-			let r: iSchedule = await cSplatoonInkApi.getSchedule();
-			let result: iCompetitiveScheduleInfo = r.gachi[0];
-
-			// Combine the images /////////////////////////////////////////////
-			const imgPath1: string = Globals.ImgPath + 'stages/' + result.stage_a.name + '.png';
-			const imgPath2: string = Globals.ImgPath + 'stages/' + result.stage_b.name + '.png';
-			const outputFile: string = 'gachi_out.png';
-			const outputPath: string = Globals.ImgPath + 'out/' + outputFile;
-			const thumbnail: string = 'gachi.png';
-			const karuImg: string = 'karu.png';
-
-			// TODO need to check if the images are valid?
-			let img: Jimp = await mergeImg([imgPath1, imgPath2]);
-			await jimpWriteAsync(img, outputPath);
-
-			const embed: RichEmbed = new RichEmbed()
-				.setTitle("GACHI MATCH!!　(ﾉ≧∇≦)ﾉ ﾐ ┸━┸ ")
-				.setColor([245, 73, 16])
-				.addField("Mode:", sprintf("%s", result.rule.name))
-				.addField("Maps:", sprintf("%s\n%s", result.stage_a.name, result.stage_b.name))
-				.setThumbnail("attachment://" + thumbnail)
-				.setAuthor("Karu", "attachment://" + karuImg)
-				.setImage("attachment://" + outputFile);
-				
-			await params.msg.channel.send({
-				embed,
-				files: [
-					{ attachment: Globals.ImgPath + thumbnail, name: thumbnail },
-					{ attachment: Globals.ImgPath + karuImg, name: karuImg },
-					{ attachment: outputPath, name: outputFile },
-				]
-			});
-
-			return true;
+		if (!f(c, ["gachi", "ranked"])) {
+			return false;
 		}
-		return false;
+
+		let currentMessage: Message = <Message>(await params.msg.channel.send("（｀・ω・´）Gimme a sec..."));
+
+		// Call API to get the schedule and locale info
+		const localeJp: any = await cSplatoonInkApi.getLocaleJp();
+		const r: iSchedule = await cSplatoonInkApi.getSchedule();
+		const result: iCompetitiveScheduleInfo = r.gachi[0];
+		const stageAUrl: string = this.splatoonWikiUrl + result.stage_a.name.replace(/\s/g, "_");
+		const stageBUrl: string = this.splatoonWikiUrl + result.stage_b.name.replace(/\s/g, "_");
+		const ruleUrl: string = this.splatoonWikiUrl + result.rule.name.replace(/\s/g, "_");
+		const stageAPath: string = Globals.ImgStagesPath + result.stage_a.name + ".jpg";
+		const stageBPath: string = Globals.ImgStagesPath + result.stage_b.name + ".jpg";
+
+		await currentMessage.edit("(｀・ω・´)9  Just a bit more...");
+
+		let embed: Rewrap = new Rewrap();
+		embed.RichEmbed.setTitle(this.title)
+			.setColor(this.color)
+			.addField("Mode:", sprintf("[%s](%s)\n%s\n", result.rule.name, ruleUrl, localeJp["rules"][result.rule.key].name))
+			.addField("Maps:", sprintf("[%s](%s)\n%s\n[%s](%s)\n%s",
+				result.stage_a.name,
+				stageAUrl,
+				localeJp["stages"][result.stage_a.id].name,
+				result.stage_b.name,
+				stageBUrl,
+				localeJp["stages"][result.stage_b.id].name,
+			));
+
+
+		await embed.SetAuthorWithImg(Globals.ImgPath + this.imgAuthor, this.imgAuthor, this.authorName);
+		await embed.SetThumbnailImg(Globals.ImgPath + this.imgThumbnail, this.imgThumbnail);
+		await embed.SetImgMultiple([stageAPath, stageBPath], Globals.ImgOutPath + this.imgOutputName, this.imgOutputName);
+		await currentMessage.edit("(;;｀・ω・´)9  Almost...there...");
+		await params.msg.channel.send(embed.Finalize());
+		await currentMessage.delete();
+
+		return true;
 	}
+	
 }
 
 export = function () {

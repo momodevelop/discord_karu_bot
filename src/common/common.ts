@@ -1,4 +1,7 @@
-﻿export namespace common {
+﻿import { statFileAsync } from 'common/promisify';
+import { Stats } from 'fs';
+
+export namespace common {
 	export const DISCORD_MESSAGE_LIMIT = 2000;
 
 	// combines an array of strings.
@@ -28,5 +31,9 @@
 		return false;
 	}
 
+	export async function file_exists(path: string): Promise<boolean> {
+		let r: Stats = await statFileAsync(path);
+		return r.isFile();
+	}
 
 }

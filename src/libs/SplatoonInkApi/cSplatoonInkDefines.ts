@@ -1,4 +1,5 @@
-﻿export interface iSchedule {
+﻿// https://splatoon2.ink/data/schedules.json
+export interface iSchedule {
 	regular: iRegularScheduleInfo[];
 	gachi: iCompetitiveScheduleInfo[];
 	league: iCompetitiveScheduleInfo[];

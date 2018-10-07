@@ -4,7 +4,7 @@
     "@types/dotenv": "^4.0.3",
     "@types/json-query": "^2.2.0",
     "@types/jsonfile": "^4.0.1",
-    "@types/node": "^10.11.0",
+    "@types/node": "^10.11.4",
     "@types/request-promise-native": "^1.0.15",
     "@types/sprintf-js": "^1.1.0",
     "app-module-path": "^2.2.0",
@@ -20,7 +20,7 @@
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
     "sprintf-js": "^1.1.1",
-    "typescript": "^3.0.3"
+    "typescript": "^3.1.1"
   },
   "name": "SuiBot",
   "version": "1.0.0",

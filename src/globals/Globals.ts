@@ -25,6 +25,14 @@ class cGlobals {
 	public get ImgPath(): string {
 		return this._root + process.env.IMG_PATH;
 	}
+
+	public get ImgStagesPath(): string {
+		return this._root + process.env.IMG_PATH + "stages/";
+	}
+
+	public get ImgOutPath(): string {
+		return this._root + process.env.IMG_PATH + "out/";
+	}
 };
 
 export let Globals: cGlobals = new cGlobals(); 

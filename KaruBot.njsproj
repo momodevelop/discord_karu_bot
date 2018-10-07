@@ -29,7 +29,6 @@
     <Content Include=".gitignore" />
     <Content Include="inc\.env" />
     <Content Include="inc\env" />
-    <Content Include="inc\install_for_deploy.sh" />
     <Content Include="inc\run.sh" />
     <Content Include="inc\stop.sh" />
     <Content Include="package-lock.json" />
@@ -37,12 +36,6 @@
     <Content Include="scripts\.env" />
     <Content Include="scripts\0_install.bat" />
     <Content Include="scripts\package_exclude_list.txt" />
-    <Content Include="data\coc\alias.json" />
-    <Content Include="data\coc\data.json" />
-    <Content Include="data\necronica\alias.json" />
-    <Content Include="data\necronica\data.json" />
-    <Content Include="data\test\alias.json" />
-    <Content Include="data\test\data.json" />
     <Content Include="tsconfig.json" />
     <Content Include="README.md" />
     <TypeScriptCompile Include="src\commands\cCallbackParams.ts" />
@@ -87,6 +80,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\responses\cCallbackParams.ts" />
+    <TypeScriptCompile Include="src\responses\common\EmbedHelper.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\responses\res\bye.ts" />
     <TypeScriptCompile Include="src\responses\res\splatoon-league-now.ts" />
     <TypeScriptCompile Include="src\responses\res\splatoon-gachi-now.ts" />
@@ -99,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin" />
+    <Folder Include="data\splatoon2\" />
     <Folder Include="inc\" />
     <Folder Include="obj" />
     <Folder Include="obj\Debug" />
@@ -107,9 +104,6 @@
     <Folder Include="src" />
     <Folder Include="src\commands\" />
     <Folder Include="data\" />
-    <Folder Include="data\coc\" />
-    <Folder Include="data\necronica\" />
-    <Folder Include="data\test\" />
     <Folder Include="src\commands\cmd\" />
     <Folder Include="src\libs" />
     <Folder Include="src\libs\Responder\" />
@@ -123,6 +117,7 @@
     <Folder Include="src\common\" />
     <Folder Include="src\globals\" />
     <Folder Include="src\responses\" />
+    <Folder Include="src\responses\common\" />
     <Folder Include="src\responses\res\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
