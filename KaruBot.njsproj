@@ -86,7 +86,10 @@
     <TypeScriptCompile Include="src\responses\res\bye.ts" />
     <TypeScriptCompile Include="src\responses\res\splatoon-league-now.ts" />
     <TypeScriptCompile Include="src\responses\res\splatoon-gachi-now.ts" />
+    <TypeScriptCompile Include="src\responses\res\splatoon-gachi-all.ts" />
+    <TypeScriptCompile Include="src\responses\res\splatoon-regular-all.ts" />
     <TypeScriptCompile Include="src\responses\res\splatoon-regular-now.ts" />
+    <TypeScriptCompile Include="src\responses\res\pat.ts" />
     <TypeScriptCompile Include="src\responses\res\thanks.ts" />
     <TypeScriptCompile Include="src\responses\res\sorry.ts" />
     <TypeScriptCompile Include="src\responses\res\hi.ts">
