@@ -1,19 +1,11 @@
 ﻿// https://splatoon2.ink/data/schedules.json
 export interface iSchedule {
-	regular: iRegularScheduleInfo[];
-	gachi: iCompetitiveScheduleInfo[];
-	league: iCompetitiveScheduleInfo[];
+	regular: iScheduleInfo[];
+	gachi: iScheduleInfo[];
+	league: iScheduleInfo[];
 }
 
-export interface iRegularScheduleInfo {
-	game_mode: iGameMode;
-	stage_a: iStage;
-	stage_b: iStage;
-	start_time: number;
-	end_time: number;
-}
-
-export interface iCompetitiveScheduleInfo {
+export interface iScheduleInfo {
 	game_mode: iGameMode;
 	stage_a: iStage;
 	stage_b: iStage;

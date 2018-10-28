@@ -36,4 +36,20 @@ export namespace common {
 		return r.isFile();
 	}
 
+	export function simplify_time(time: number): string {
+		let d: Date = new Date(time * 1000);
+		let hours: number = d.getHours();
+		let ret: string;
+		if (hours >= 12) {
+			hours -= 12;
+			ret = hours.toString() + "PM";
+		}
+		else {
+			ret = hours.toString() + "AM";
+		}
+
+
+
+		return ret;
+	}
 }
