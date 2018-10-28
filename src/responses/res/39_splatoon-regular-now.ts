@@ -1,7 +1,6 @@
 ﻿//https://github.com/misenhower/splatoon2.ink/wiki/Data-access-policy
 
-import { common } from 'common/common';
-import { SplatoonProc, eBattleTypes } from 'responses/common/SplatoonHelper';
+import { SplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
 import { cResponseBase } from 'libs/Responder/cResponseBase';
 import { cCallbackParams } from '../cCallbackParams';
 
@@ -9,13 +8,19 @@ class cResponse extends cResponseBase {
 
 	private readonly title: string = "(ﾉ≧∇≦)ﾉ ﾐ TURF!!!"
 	private readonly conditions: string[][] = [
-		["regular", "turf"]
+		SplatoonHelper.CONDITION_BATTLE_TYPE[eBattleTypes.REGULAR]
 	];
 
 	public async exec(params: cCallbackParams): Promise<boolean> {				
-		return SplatoonProc(this.conditions, params, this.title, eBattleTypes.REGULAR, () => {
+		if (!SplatoonHelper.ConditionsProc(this.conditions, params.msg.content)) {
+			return false;
+		}
+
+		SplatoonHelper.SplatoonProc(params, this.title, eBattleTypes.REGULAR, () => {
 			return 0;
 		});
+
+		return true;
 	}
 }
 
