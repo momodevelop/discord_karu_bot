@@ -3,7 +3,6 @@ const messages: string[] = [
 	"Huh?",
 	"What?",
 	"Eh?",
-	"This is Karu, Sui is away cooking~! ^^",
 	"Huh?",
 	"Wait, what?",
 	"Nani?",

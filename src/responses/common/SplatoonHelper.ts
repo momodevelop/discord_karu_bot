@@ -48,6 +48,20 @@ export class SplatoonHelper {
 		["league"],
 	];
 
+	public static readonly RULES_KEY: string[] = [
+		"rainmaker",
+		"clam blitz",
+		"tower_control",
+		"splat_zones"
+	];
+
+	public static readonly RULES_NAME: string[] = [
+		"Rainmaker",
+		"Clam",
+		"tower_control",
+		"splat_zones"
+	];
+
 	private static readonly IMG_THUMBNAIL: string[] = [
 		"regular.png", "gachi.png", "league.png"
 	];
@@ -104,15 +118,27 @@ export class SplatoonHelper {
 	}
 
 
-	public static async SplatoonProc(params: cCallbackParams, title: string, type: eBattleTypes, scheduleSelectorFunc: () => number) {
+	public static async SplatoonProc(params: cCallbackParams, title: string, type: eBattleTypes, scheduleSelectorFunc: (info: iScheduleInfo[]) => number) {
 
 
 		let currentMessage: Message = <Message>(await params.msg.channel.send("（｀・ω・´）Gimme a sec..."));
 
+		
+
 		// Call API to get the schedule and locale info
 		const localeJp: any = await cSplatoonInkApi.getLocaleJp();
 		const r: iSchedule = await cSplatoonInkApi.getSchedule();
-		const result: iScheduleInfo = this.GetScheduleFuncByType(type, r)[scheduleSelectorFunc()];
+
+		
+
+		const results: iScheduleInfo[] = this.GetScheduleFuncByType(type, r);
+		let index: number = scheduleSelectorFunc(results);
+		if (index < 0) {
+			await currentMessage.edit("(´・ω・`) Sorry...something went wrong...");
+			return;
+		}
+
+		const result: iScheduleInfo = results[index];
 		const stageAUrl: string = this.URL_SPLATOON_WIKI + result.stage_a.name.replace(/\s/g, "_");
 		const stageBUrl: string = this.URL_SPLATOON_WIKI + result.stage_b.name.replace(/\s/g, "_");
 		const ruleUrl: string = this.URL_SPLATOON_WIKI + result.rule.name.replace(/\s/g, "_");
