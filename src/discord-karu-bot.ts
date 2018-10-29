@@ -51,16 +51,8 @@ async function onMessage(msg: Message): Promise<void> {
 	}
 
 	else*/
-	if (msg.content.match(/\b(karu|karu,|Karu|Karu,)\b/i)) {
-		// I'm lazy
-		let c = msg.content;
-		let f = common.has_words;
-
-		if (!await responder.Exec(new responseCallbackParams(bot, msg))) {
-			let reply: string = msg_default();
-			await msg.channel.send(reply)
-		}
-		
+	if (msg.content.match(/\b(karu)\b/gi)) {
+		await responder.Exec(new responseCallbackParams(bot, msg));
 	}
 
 	return;
