@@ -6,6 +6,7 @@ import { cCallbackParams } from '../cCallbackParams';
 
 class cResponse extends cResponseBase {
 
+	private readonly battleType: eBattleTypes = eBattleTypes.REGULAR;
 	private readonly title: string = "(ﾉ≧∇≦)ﾉ ﾐ TURF!!!"
 	private readonly conditions: string[][] = [
 		SplatoonHelper.CONDITION_BATTLE_TYPE[eBattleTypes.REGULAR]
@@ -16,7 +17,7 @@ class cResponse extends cResponseBase {
 			return false;
 		}
 
-		SplatoonHelper.SplatoonProc(params, this.title, eBattleTypes.REGULAR, () => {
+		SplatoonHelper.SplatoonProc(params, this.title, this.battleType, () => {
 			return 0;
 		});
 

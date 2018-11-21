@@ -58,8 +58,8 @@ export class SplatoonHelper {
 	public static readonly RULES_NAME: string[] = [
 		"Rainmaker",
 		"Clam",
-		"tower_control",
-		"splat_zones"
+		"Tower Control",
+		"Splat Zones"
 	];
 
 	private static readonly IMG_THUMBNAIL: string[] = [

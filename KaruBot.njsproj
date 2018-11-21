@@ -85,6 +85,8 @@
     <TypeScriptCompile Include="src\responses\common\SplatoonHelper.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\responses\res\37_splatoon-regular-next.ts" />
+    <TypeScriptCompile Include="src\responses\res\27_splatoon-league-next.ts" />
     <TypeScriptCompile Include="src\responses\res\17_splatoon-gachi-next.ts" />
     <TypeScriptCompile Include="src\responses\res\bye.ts" />
     <TypeScriptCompile Include="src\responses\res\29_splatoon-league-now.ts" />

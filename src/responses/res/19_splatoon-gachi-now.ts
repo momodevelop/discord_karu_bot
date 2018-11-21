@@ -4,9 +4,10 @@ import { cCallbackParams } from '../cCallbackParams';
 
 class cResponse extends cResponseBase {
 
+	private readonly battleType: eBattleTypes = eBattleTypes.GACHI;
 	private readonly title: string = "(ﾉ≧∇≦)ﾉ ﾐ GACHI!!!"
 	private readonly conditions: string[][] = [
-		SplatoonHelper.CONDITION_BATTLE_TYPE[eBattleTypes.GACHI]
+		SplatoonHelper.CONDITION_BATTLE_TYPE[this.battleType]
 	];
 
 	public async exec(params: cCallbackParams): Promise<boolean> {
@@ -14,7 +15,7 @@ class cResponse extends cResponseBase {
 			return false;
 		}
 
-		SplatoonHelper.SplatoonProc(params, this.title, eBattleTypes.GACHI, () => {
+		SplatoonHelper.SplatoonProc(params, this.title, this.battleType, () => {
 			return 0;
 		});
 

@@ -6,13 +6,11 @@ import { iScheduleInfo } from 'libs/SplatoonInkApi/cSplatoonInkDefines';
 
 class cResponse extends cResponseBase {
 
-	private readonly battleType: eBattleTypes = eBattleTypes.GACHI;
+	private readonly battleType: eBattleTypes = eBattleTypes.LEAGUE;
 	private conditions: string[][] = [
 		SplatoonHelper.CONDITION_BATTLE_TYPE[this.battleType],
 		["next"],
 	];
-
-	
 
 	public async exec(params: cCallbackParams): Promise<boolean> {
 
@@ -25,7 +23,7 @@ class cResponse extends cResponseBase {
 		// Check for rule types
 		let rule: eRuleTypes | null = SplatoonHelper.GetRuleByCondition(params.msg.content);
 		if (rule == null) {
-			let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next Ranked Battle is...!";
+			let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next League Battle is...!";
 			await SplatoonHelper.SplatoonProc(params, title, this.battleType, () => {
 				return 1;
 			});
@@ -33,7 +31,7 @@ class cResponse extends cResponseBase {
 
 		else {
 			let realRule: eRuleTypes = rule!;
-			let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next Ranked " + SplatoonHelper.RULES_NAME[realRule!] + " is...!";
+			let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next League " + SplatoonHelper.RULES_NAME[realRule!] + " is...!";
 			await SplatoonHelper.SplatoonProc(params, title, this.battleType, (info: iScheduleInfo[]) => {
 				let index = -1;
 				for (let i = 0; i < info.length; ++i) {
