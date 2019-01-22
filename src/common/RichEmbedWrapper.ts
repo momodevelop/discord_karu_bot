@@ -1,6 +1,6 @@
 ﻿import { RichEmbed } from 'discord.js';
-import { common } from 'common/common';
-import { writeFileAsync, jimpWriteAsync } from 'common/promisify';
+import { common } from './common';
+import { writeFileAsync, jimpWriteAsync } from './promisify';
 import * as mergeImg from 'merge-img';
 import Jimp from 'jimp-custom';
 

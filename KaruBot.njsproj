@@ -59,14 +59,6 @@
     <TypeScriptCompile Include="src\libs\Commander\cCommander.ts" />
     <TypeScriptCompile Include="src\libs\Commander\iCommandCallbackParams.ts" />
     <TypeScriptCompile Include="src\libs\Commander\iCommandList.ts" />
-    <TypeScriptCompile Include="src\libs\Discord\cDiscordBot.ts" />
-    <TypeScriptCompile Include="src\libs\JsonDB\cJsonDB.ts" />
-    <TypeScriptCompile Include="src\libs\JsonDB\cJsonDBBotify.ts" />
-    <TypeScriptCompile Include="src\libs\JsonDB\gJsonDBCommon.ts" />
-    <TypeScriptCompile Include="src\libs\JsonDB\gJsonQueryFunc.ts" />
-    <TypeScriptCompile Include="src\libs\MessageSystem\cMsg.ts" />
-    <TypeScriptCompile Include="src\libs\MessageSystem\gJsonQueryFunc.ts" />
-    <TypeScriptCompile Include="src\libs\Misc\gHelpers.ts" />
     <TypeScriptCompile Include="src\libs\SplatoonInkApi\cSplatoonInkDefines.ts" />
     <TypeScriptCompile Include="src\libs\SplatoonInkApi\cSplatoonInkApi.ts" />
     <TypeScriptCompile Include="src\merge-img.d.ts" />
@@ -79,7 +71,7 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\responses\cCallbackParams.ts" />
-    <TypeScriptCompile Include="src\responses\common\EmbedHelper.ts">
+    <TypeScriptCompile Include="src\common\RichEmbedWrapper.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\responses\common\SplatoonHelper.ts">
@@ -114,10 +106,6 @@
     <Folder Include="src\libs" />
     <Folder Include="src\libs\Responder\" />
     <Folder Include="src\libs\Commander\" />
-    <Folder Include="src\libs\Discord\" />
-    <Folder Include="src\libs\JsonDB\" />
-    <Folder Include="src\libs\MessageSystem\" />
-    <Folder Include="src\libs\Misc\" />
     <Folder Include="src\libs\SplatoonInkApi\" />
     <Folder Include="src\messages\" />
     <Folder Include="src\common\" />

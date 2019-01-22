@@ -1,6 +1,6 @@
 ﻿// All the common shit
 import { common } from 'common/common';
-import { RichEmbedWrapper as Rewrap } from 'responses/common/EmbedHelper';
+import { RichEmbedWrapper as Rewrap } from 'common/RichEmbedWrapper';
 import { cResponseBase } from 'libs/Responder/cResponseBase';
 import { cCallbackParams } from '../cCallbackParams';
 import { rand_msg } from 'messages/MsgArrayThanks'
