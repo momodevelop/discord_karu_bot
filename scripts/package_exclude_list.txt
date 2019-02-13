@@ -1,6 +1,0 @@
-.map
-run.bat
-test\
-out_regular.png
-out_gachi.png
-out_league.png
