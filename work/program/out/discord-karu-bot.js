@@ -57,6 +57,7 @@ function onMessage(msg) {
 bot.login(process.env.TOKEN)
     .then(() => {
     console.info("KaruBot up and ready to work! ^^b");
+    bot.user.setActivity("type 'karu help'");
     bot.on('message', onMessage);
 })
     .catch((e) => {
