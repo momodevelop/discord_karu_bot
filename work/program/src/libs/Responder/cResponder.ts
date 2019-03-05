@@ -8,7 +8,7 @@ export class cResponder {
 
 	public AddResponse(response_to_add: cResponseBase, name: string): void {
 		this.responseList.push(response_to_add);
-		console.info("[cResponder] Added Command: " + name);
+		console.info("[cResponder] Added Response: " + name);
 	}
 
 	public async Exec(params: iResponseCallbackParams): Promise<boolean> {

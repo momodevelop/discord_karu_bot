@@ -19,15 +19,15 @@ Globals.Root = __dirname + "/";
 
 
 // Commander ////////////////////////////////////
-//let commander: cCommander = new cCommander();
-//commander.ParseDir(__dirname + '/commands/cmd/');
+let commander: cCommander = new cCommander();
+commander.ParseDir(__dirname + '/commands/cmd/');
 
 // Responder //////////////////////////////////
 let responder: cResponder = new cResponder();
 responder.ParseDir(__dirname + '/responses/res/');
 
 // Discord bot ////////////////////////////
-//const prefix = process.env.PREFIX || "karu,"
+const prefix = "karu"
 const bot: Client = new Client();
 
 async function onMessage(msg: Message): Promise<void> {
@@ -36,7 +36,7 @@ async function onMessage(msg: Message): Promise<void> {
 		return;
 	}
 	
-	/*if (msg.content.startsWith(prefix)) {
+	if (msg.content.startsWith(prefix)) {
 		console.info('I\'m called! -> ' + msg.content);
 
 		let args: string[] = msg.content.substring(prefix.length).match(/(?:[^\s"]+\b|(")[^"]*("))+|[=!&|~]/g) || [];
@@ -47,11 +47,12 @@ async function onMessage(msg: Message): Promise<void> {
 		let command: string = args[0];
 		args.shift();
 
-		commander.GetCommand(command, new cCallbackParams(bot, msg, args));
+		if (! await commander.Exec(command, new commandCallbackParams(bot, msg, args))) {
+			await responder.Exec(new responseCallbackParams(bot, msg));
+		}
 	}
 
-	else*/
-	if (msg.content.match(/\b(karu)\b/gi)) {
+	else if (msg.content.match(/\b(karu)\b/gi)) {
 		await responder.Exec(new responseCallbackParams(bot, msg));
 	}
 

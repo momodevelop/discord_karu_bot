@@ -14,7 +14,7 @@ class cGlobals {
 		return this._splatoonInkApi;
 	}
 
-	private _root: string;
+	private _root: string = "";
 	public set Root(root: string) {
 		this._root = root;
 	}

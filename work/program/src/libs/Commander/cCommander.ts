@@ -17,14 +17,18 @@ export class cCommander {
 		}
 	}
 
-	public GetCommand(name: string, params: iCommandCallbackParams): Promise<void> {
-		return this.commandList[name].exe(params)
-			.then(() => {
-				return Promise.resolve();
-			})
-			.catch(() => {
+	public async Exec(name: string, params: iCommandCallbackParams): Promise<boolean> {
+		let command: cCommandBase = this.commandList[name];
+		if (command) {
+			try {
+				await command.exec(params);
+			} catch {
 				console.error("[cCommander] Something went wrong with the command: " + name);
-			});
+			}
+
+			return true;
+		}
+		return false;
 	}
 
 	public ParseDir(path: string) {
