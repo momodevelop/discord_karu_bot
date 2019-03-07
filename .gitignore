@@ -8,3 +8,5 @@ package/
 bin/
 env.bat
 img/out/*.jpg
+yarn-error.log
+yarn.lock
