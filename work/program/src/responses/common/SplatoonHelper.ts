@@ -7,7 +7,7 @@ import { iSchedule, iScheduleInfo } from 'libs/SplatoonInkApi/cSplatoonInkDefine
 import { cSplatoonInkApi } from 'libs/SplatoonInkApi/cSplatoonInkApi';
 import { Globals } from 'globals/Globals'
 import { sprintf } from 'sprintf-js';
-import { eRuleTypes, getRuleInfo, cRuleInfo } from 'responses/common/SplatoonData'
+import { RuleTypes, getRuleInfo, RuleInfo } from 'responses/common/SplatoonData'
 
 export enum eBattleTypes {
 	REGULAR = 0,
@@ -15,7 +15,7 @@ export enum eBattleTypes {
 	LEAGUE	
 }
 
-export class cSplatoonHelper {
+export class SplatoonHelper {
 
 	public static readonly COLOR: [number, number, number][] = [
 		[207, 246, 34],
@@ -69,8 +69,8 @@ export class cSplatoonHelper {
 
 
 	// Gets the stage details by time (using Date)
-	public static async GetEmbedScheduleByTime(params: cCallbackParams, title: string, type: eBattleTypes, date: Date): Promise<void> {
-		return await cSplatoonHelper.GetEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
+	public static async getEmbedScheduleByTime(params: cCallbackParams, title: string, type: eBattleTypes, date: Date): Promise<void> {
+		return await SplatoonHelper.getEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
 			let index = -1;
 			// assumes that info time is form earliest of latest.
 			for (let i = 0; i < info.length; ++i) {
@@ -87,10 +87,10 @@ export class cSplatoonHelper {
 	}
 
 	// Gets the upcoming rule's stage details
-	public static async GetEmbedScheduleNextRule(params: cCallbackParams, title: string, type: eBattleTypes, rule: eRuleTypes): Promise<void> {
-		return await cSplatoonHelper.GetEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
+	public static async getEmbedScheduleNextRule(params: cCallbackParams, title: string, type: eBattleTypes, rule: RuleTypes): Promise<void> {
+		return await SplatoonHelper.getEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
 			let index = -1;
-			let ruleInfo: cRuleInfo = getRuleInfo(rule);
+			let ruleInfo: RuleInfo = getRuleInfo(rule);
 			if (!ruleInfo) {
 				return -1;
 			}
@@ -105,21 +105,21 @@ export class cSplatoonHelper {
 	}
 
 	// Gets the upcoming stage details
-	public static async GetEmbedScheduleNext(params: cCallbackParams, title: string, type: eBattleTypes): Promise<void> {
-		return await cSplatoonHelper.GetEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
+	public static async getEmbedScheduleNext(params: cCallbackParams, title: string, type: eBattleTypes): Promise<void> {
+		return await SplatoonHelper.getEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
 			return 1;
 		});
 	}
 
 
 	// Gets the current ongoing stage details
-	public static async GetEmbedScheduleNow(params: cCallbackParams, title: string, type: eBattleTypes): Promise<void> {
-		return await cSplatoonHelper.GetEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
+	public static async getEmbedScheduleNow(params: cCallbackParams, title: string, type: eBattleTypes): Promise<void> {
+		return await SplatoonHelper.getEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
 			return 0;
 		});
 	}
 
-	public static async GetEmbedSchedule(params: cCallbackParams, title: string, type: eBattleTypes, scheduleSelectorFunc: (info: iScheduleInfo[]) => number) : Promise<void> {
+	public static async getEmbedSchedule(params: cCallbackParams, title: string, type: eBattleTypes, scheduleSelectorFunc: (info: iScheduleInfo[]) => number) : Promise<void> {
 		let currentMessage: Message = <Message>(await params.msg.channel.send("（｀・ω・´）Gimme a sec..."));
 		try {
 			// Call API to get the schedule and locale info
