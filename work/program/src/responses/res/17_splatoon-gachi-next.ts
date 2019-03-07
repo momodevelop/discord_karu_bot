@@ -1,5 +1,5 @@
 ﻿
-import { cSplatoonHelper, eBattleTypes } from 'responses/common/cSplatoonHelper';
+import { cSplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
 import { cResponseBase } from 'libs/Responder/cResponseBase';
 import { cCallbackParams } from '../cCallbackParams';
 import { getRuleByCondition, cRuleInfo } from 'responses/common/SplatoonData'
