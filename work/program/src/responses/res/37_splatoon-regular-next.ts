@@ -1,4 +1,4 @@
-﻿import { SplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
+﻿import { cSplatoonHelper, eBattleTypes } from 'responses/common/cSplatoonHelper';
 import { cResponseBase } from 'libs/Responder/cResponseBase';
 import { cCallbackParams } from '../cCallbackParams';
 
@@ -6,17 +6,17 @@ class cResponse extends cResponseBase {
 
 	private readonly battleType: eBattleTypes = eBattleTypes.REGULAR;
 	private conditions: string[][] = [
-		SplatoonHelper.CONDITION_BATTLE_TYPE[this.battleType],
+		cSplatoonHelper.CONDITION_BATTLE_TYPE[this.battleType],
 		["next"],
 	];
 
 	public async exec(params: cCallbackParams): Promise<boolean> {
-		if (!SplatoonHelper.ConditionsProc(this.conditions, params.msg.content)) {
+		if (!cSplatoonHelper.ConditionsProc(this.conditions, params.msg.content)) {
 			return false;
 		}
 
 		let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next Turf Wars is...!";
-		await SplatoonHelper.GetEmbedScheduleNext(params, title, this.battleType);
+		await cSplatoonHelper.GetEmbedScheduleNext(params, title, this.battleType);
 
 		return true;
 	}

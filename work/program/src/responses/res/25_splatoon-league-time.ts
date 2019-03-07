@@ -1,5 +1,5 @@
 ﻿import { common } from 'common/common';
-import { SplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
+import { cSplatoonHelper, eBattleTypes } from 'responses/common/cSplatoonHelper';
 import { cResponseBase } from 'libs/Responder/cResponseBase';
 import { cCallbackParams } from '../cCallbackParams';
 import { sprintf } from 'sprintf-js'
@@ -10,12 +10,12 @@ class cResponse extends cResponseBase {
 
 	private readonly battleType: eBattleTypes = eBattleTypes.LEAGUE;
 	private conditions: string[][] = [
-		SplatoonHelper.CONDITION_BATTLE_TYPE[this.battleType],
+		cSplatoonHelper.CONDITION_BATTLE_TYPE[this.battleType],
 	];
 
 	public async exec(params: cCallbackParams): Promise<boolean> {
 
-		if (!SplatoonHelper.ConditionsProc(this.conditions, params.msg.content)) {
+		if (!cSplatoonHelper.ConditionsProc(this.conditions, params.msg.content)) {
 			return false;
 		}
 
@@ -25,7 +25,7 @@ class cResponse extends cResponseBase {
 		}
 
 		let title: string = sprintf("(ﾉ≧∇≦)ﾉ ﾐ The League Battle at the %02d%02dhrs is...!", date.getHours(), date.getMinutes());
-		await SplatoonHelper.GetEmbedScheduleByTime(params, title, this.battleType, date);
+		await cSplatoonHelper.GetEmbedScheduleByTime(params, title, this.battleType, date);
 	
 
 		return true;

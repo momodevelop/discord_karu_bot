@@ -15,7 +15,7 @@ export enum eBattleTypes {
 	LEAGUE	
 }
 
-export class SplatoonHelper {
+export class cSplatoonHelper {
 
 	public static readonly COLOR: [number, number, number][] = [
 		[207, 246, 34],
@@ -70,7 +70,7 @@ export class SplatoonHelper {
 
 	// Gets the stage details by time (using Date)
 	public static async GetEmbedScheduleByTime(params: cCallbackParams, title: string, type: eBattleTypes, date: Date): Promise<void> {
-		return await SplatoonHelper.GetEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
+		return await cSplatoonHelper.GetEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
 			let index = -1;
 			// assumes that info time is form earliest of latest.
 			for (let i = 0; i < info.length; ++i) {
@@ -88,7 +88,7 @@ export class SplatoonHelper {
 
 	// Gets the upcoming rule's stage details
 	public static async GetEmbedScheduleNextRule(params: cCallbackParams, title: string, type: eBattleTypes, rule: eRuleTypes): Promise<void> {
-		return await SplatoonHelper.GetEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
+		return await cSplatoonHelper.GetEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
 			let index = -1;
 			let ruleInfo: cRuleInfo = getRuleInfo(rule);
 			if (!ruleInfo) {
@@ -106,7 +106,7 @@ export class SplatoonHelper {
 
 	// Gets the upcoming stage details
 	public static async GetEmbedScheduleNext(params: cCallbackParams, title: string, type: eBattleTypes): Promise<void> {
-		return await SplatoonHelper.GetEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
+		return await cSplatoonHelper.GetEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
 			return 1;
 		});
 	}
@@ -114,7 +114,7 @@ export class SplatoonHelper {
 
 	// Gets the current ongoing stage details
 	public static async GetEmbedScheduleNow(params: cCallbackParams, title: string, type: eBattleTypes): Promise<void> {
-		return await SplatoonHelper.GetEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
+		return await cSplatoonHelper.GetEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
 			return 0;
 		});
 	}

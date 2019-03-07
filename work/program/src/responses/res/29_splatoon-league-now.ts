@@ -1,4 +1,4 @@
-﻿import { SplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
+﻿import { cSplatoonHelper, eBattleTypes } from 'responses/common/cSplatoonHelper';
 import { cResponseBase } from 'libs/Responder/cResponseBase';
 import { cCallbackParams } from '../cCallbackParams';
 
@@ -9,15 +9,15 @@ class cResponse extends cResponseBase {
 	private readonly battleType: eBattleTypes = eBattleTypes.LEAGUE;
 	private readonly title: string = "(ﾉ≧∇≦)ﾉ ﾐ LEAGUE!!!"
 	private readonly conditions: string[][] = [
-		SplatoonHelper.CONDITION_BATTLE_TYPE[this.battleType]
+		cSplatoonHelper.CONDITION_BATTLE_TYPE[this.battleType]
 	];
 
 	public async exec(params: cCallbackParams): Promise<boolean> {
-		if (!SplatoonHelper.ConditionsProc(this.conditions, params.msg.content)) {
+		if (!cSplatoonHelper.ConditionsProc(this.conditions, params.msg.content)) {
 			return false;
 		}
 
-		await SplatoonHelper.GetEmbedScheduleNow(params, this.title, this.battleType);
+		await cSplatoonHelper.GetEmbedScheduleNow(params, this.title, this.battleType);
 
 		return true;
 	}
