@@ -9,66 +9,68 @@ import { cResponder } from 'libs/Responder/cResponder';
 import { Globals } from 'globals/Globals';
 import { cCallbackParams as commandCallbackParams } from 'commands/cCallbackParams';
 import { cCallbackParams as responseCallbackParams } from 'responses/cCallbackParams';
-import { common } from 'common/common';
-
-// Load messagees /////////////////////////////
-import { rand_msg as msg_default } from 'messages/MsgArrayDefault'
 
 //Set up global variables /////////////////////
 Globals.Root = __dirname + "/";
 
-
-// Commander ////////////////////////////////////
 let commander: cCommander = new cCommander();
-commander.ParseDir(__dirname + '/commands/cmd/');
-
-// Responder //////////////////////////////////
 let responder: cResponder = new cResponder();
-responder.ParseDir(__dirname + '/responses/res/');
 
 // Discord bot ////////////////////////////
-const prefix = "karu"
+const prefix: string = process.env.PREFIX || "";
+if (prefix == "") {
+	console.error("Prefix not defined!")
+	process.exit(0);
+}
 const bot: Client = new Client();
 
 async function onMessage(msg: Message): Promise<void> {
-	// reject self
-	if (msg.author.id === bot.user.id) {
-		return;
-	}
-	
-	if (msg.content.startsWith(prefix)) {
-		console.info('I\'m called! -> ' + msg.content);
-
-		let args: string[] = msg.content.substring(prefix.length).match(/(?:[^\s"]+\b|(")[^"]*("))+|[=!&|~]/g) || [];
-		if (!args.length) {
+	try {
+		// reject self
+		if (msg.author.id === bot.user.id) {
 			return;
 		}
 
-		let command: string = args[0];
-		args.shift();
+		if (msg.content.startsWith(prefix)) {
+			console.info('I\'m called! -> ' + msg.content);
 
-		if (! await commander.Exec(command, new commandCallbackParams(bot, msg, args))) {
+			let args: string[] = msg.content.substring(prefix.length).match(/(?:[^\s"]+\b|(")[^"]*("))+|[=!&|~]/g) || [];
+			if (!args.length) {
+				return;
+			}
+
+			let command: string = args[0];
+			args.shift();
+
+			if (! await commander.Exec(command, new commandCallbackParams(bot, msg, args))) {
+				await responder.Exec(new responseCallbackParams(bot, msg));
+			}
+		}
+
+		else if (msg.content.match(/\b(karu)\b/gi)) {
 			await responder.Exec(new responseCallbackParams(bot, msg));
 		}
 	}
-
-	else if (msg.content.match(/\b(karu)\b/gi)) {
-		await responder.Exec(new responseCallbackParams(bot, msg));
+	catch (e) {
+		console.error(e)
 	}
-
-	return;
 }
 
-
-bot.login(process.env.TOKEN)
-	.then(() => {
+async function onLoad(): Promise<void> {
+	try {
+		await commander.ParseDir(__dirname + '/commands/cmd/');
+		await responder.ParseDir(__dirname + '/responses/res/');
+		await bot.login(process.env.TOKEN);
 		console.info("KaruBot up and ready to work! ^^b");
-		bot.user.setActivity("type 'karu help'");
+		bot.user.setActivity("type '" + prefix + " help'");
 		bot.on('message', onMessage);
-	})
-	.catch((e: any) => {
+	}
+	catch (e) {
 		console.info(e);
 		process.exit(0);
-	});
+	}
+}
+
+onLoad();
 
 

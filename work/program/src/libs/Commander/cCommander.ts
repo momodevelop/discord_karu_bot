@@ -2,6 +2,9 @@
 import { iCommandList } from './iCommandList';
 import { iCommandCallbackParams } from './iCommandCallbackParams';
 import { readdir } from 'fs';
+import { promisify } from 'util';
+
+const readdirAsync = promisify(readdir);
 
 // Invoker class
 export class cCommander {
@@ -31,23 +34,19 @@ export class cCommander {
 		return false;
 	}
 
-	public ParseDir(path: string) {
-		readdir(path, (err: NodeJS.ErrnoException, files: string[]) => {
-			files.forEach(file => {
-				let filename_split = file.split(/\.(.+)/);
-
-				if (filename_split != null) {
-					// only accept js files
-					if (filename_split[1] == "js") {
-						let filename: string = filename_split[0];
-						import(`${path}${filename}`).then((module) => {
-							this.AddCommand(module())
-						});
-					}
+		public async ParseDir(path: string): Promise<void> {
+		let files: string[] = await readdirAsync(path);
+		for (let i: number = 0; i < files.length; ++i) {
+			let filename_split = files[i].split(/\.(.+)/);
+			if (filename_split != null) {
+				// only accept js files
+				if (filename_split[1] == "js") {
+					let filename: string = filename_split[0];
+					let module: any = await import(`${path}${filename}`);
+					this.AddCommand(module());
 				}
-
-			});
-		});
-}
+			}
+		}		
+	}
 
 }
