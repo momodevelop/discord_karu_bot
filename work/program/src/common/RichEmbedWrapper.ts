@@ -1,6 +1,6 @@
 ﻿import { RichEmbed } from 'discord.js';
-import { common } from './common';
-import { writeFileAsync, jimpWriteAsync } from './promisify';
+import { fileExists } from './common';
+import { jimpWriteAsync } from './promisify';
 import * as mergeImg from 'merge-img';
 import Jimp from 'jimp-custom';
 
@@ -33,7 +33,7 @@ export class RichEmbedWrapper {
 
 	// TODO: reject multiple names when adding files
 	public async addAttachment(path: string, name: string): Promise<boolean> {
-		if (await common.file_exists(path)) {
+		if (await fileExists(path)) {
 			this._files.push({
 				attachment: path,
 				name: name
@@ -70,7 +70,7 @@ export class RichEmbedWrapper {
 		}
 
 		for (let i = 0; i < paths.length; ++i) {
-			let found: boolean = await common.file_exists(paths[i]);
+			let found: boolean = await fileExists(paths[i]);
 			if (!found) {
 				console.error("File does not exist: " + paths[i]);
 				return false;

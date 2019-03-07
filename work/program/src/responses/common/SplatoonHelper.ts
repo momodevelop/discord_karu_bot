@@ -1,5 +1,5 @@
 ﻿// All the common shit
-import { common } from 'common/common';
+import { hasWords, simplifyTime } from 'common/common';
 import { RichEmbedWrapper as Rewrap } from 'common/RichEmbedWrapper';
 import { CallbackParams } from '../CallbackParams';
 import { Message} from 'discord.js';
@@ -56,9 +56,8 @@ export class SplatoonHelper {
 
 
 	public static ConditionsProc(conditions: string[][], content: string): boolean {
-		const f = common.has_words;
 		for (let i = 0; i < conditions.length; ++i) {
-			if (!f(content, conditions[i])) {
+			if (!hasWords(content, conditions[i])) {
 				return false;
 			}
 		}
@@ -148,7 +147,7 @@ export class SplatoonHelper {
 			(type != eBattleTypes.REGULAR) && embed.RichEmbed.addField("Mode:", sprintf("[%s](%s)\n%s\n", result.rule.name, ruleUrl, localeJp["rules"][result.rule.key].name));
 
 			embed.RichEmbed
-				.addField("Time: ", sprintf("%s - %s", common.simplify_time(result.start_time), common.simplify_time(result.end_time)))
+				.addField("Time: ", sprintf("%s - %s", simplifyTime(result.start_time), simplifyTime(result.end_time)))
 				.addField("Maps:", sprintf("[%s](%s)\n%s\n[%s](%s)\n%s",
 					result.stage_a.name,
 					stageAUrl,

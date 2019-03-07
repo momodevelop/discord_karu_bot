@@ -1,4 +1,4 @@
-﻿import { common } from 'common/common';
+﻿import { hasWords } from 'common/common';
 
 export enum RuleTypes {
 	RAINMAKER = 0,
@@ -39,7 +39,7 @@ export function getRuleInfo(rule: RuleTypes) {
 
 export function getRuleByCondition(condition: string): RuleInfo | null {
 	for (let i: number = 0; i < ruleArray.length; ++i) {
-		if (common.has_words(condition, ruleArray[i].Conditions)) {
+		if (hasWords(condition, ruleArray[i].Conditions)) {
 			return ruleArray[i];
 		}
 	}

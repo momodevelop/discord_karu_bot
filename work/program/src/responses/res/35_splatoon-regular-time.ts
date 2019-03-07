@@ -1,4 +1,4 @@
-﻿import { common } from 'common/common';
+﻿import { parseTime } from 'common/common';
 import { SplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
 import { ResponseBase } from 'libs/Responder/ResponseBase';
 import { CallbackParams } from '../CallbackParams'
@@ -21,7 +21,7 @@ class cResponse extends ResponseBase {
 			return false;
 		}
 
-		let date: Date | null = common.parseTime(params.msg.content);
+		let date: Date | null = parseTime(params.msg.content);
 		if (date == null) {
 			return false;
 		}

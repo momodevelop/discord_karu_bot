@@ -1,5 +1,4 @@
-﻿import { common } from 'common/common';
-import { CommandBase } from 'libs/Commander/CommandBase';
+﻿import { CommandBase } from 'libs/Commander/CommandBase';
 import { CallbackParams } from 'commands/CallbackParams';
 
 class cCommand extends CommandBase {
