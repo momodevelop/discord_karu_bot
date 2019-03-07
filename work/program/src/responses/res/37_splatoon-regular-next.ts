@@ -1,8 +1,6 @@
-﻿import { common } from 'common/common';
-import { SplatoonHelper, eBattleTypes, eRuleTypes } from 'responses/common/SplatoonHelper';
+﻿import { SplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
 import { cResponseBase } from 'libs/Responder/cResponseBase';
 import { cCallbackParams } from '../cCallbackParams';
-import { iScheduleInfo } from 'libs/SplatoonInkApi/cSplatoonInkDefines';
 
 class cResponse extends cResponseBase {
 
@@ -17,7 +15,6 @@ class cResponse extends cResponseBase {
 			return false;
 		}
 
-		// Check for rule types
 		let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next Turf Wars is...!";
 		await SplatoonHelper.SplatoonNextAnyProc(params, title, this.battleType);
 

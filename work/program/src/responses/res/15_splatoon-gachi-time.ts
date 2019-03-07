@@ -1,8 +1,7 @@
 ﻿import { common } from 'common/common';
-import { SplatoonHelper, eBattleTypes, eRuleTypes } from 'responses/common/SplatoonHelper';
+import { SplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
 import { cResponseBase } from 'libs/Responder/cResponseBase';
 import { cCallbackParams } from '../cCallbackParams';
-import { iScheduleInfo } from 'libs/SplatoonInkApi/cSplatoonInkDefines';
 import { sprintf } from 'sprintf-js'
 
 // Given a specific time, give the map.

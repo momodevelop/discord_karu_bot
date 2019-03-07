@@ -7,41 +7,13 @@ import { iSchedule, iScheduleInfo } from 'libs/SplatoonInkApi/cSplatoonInkDefine
 import { cSplatoonInkApi } from 'libs/SplatoonInkApi/cSplatoonInkApi';
 import { Globals } from 'globals/Globals'
 import { sprintf } from 'sprintf-js';
+import { eRuleTypes, getRuleInfo, cRuleInfo } from 'responses/common/SplatoonData'
 
 export enum eBattleTypes {
 	REGULAR = 0,
 	GACHI,
 	LEAGUE	
 }
-
-export enum eRuleTypes {
-	RAINMAKER = 0,
-	CLAM_BLITZ,
-	TOWER_CONTROL,
-	SPLAT_ZONES
-}
-
-class RuleInfo {
-	private conditions: string[];
-	private key: string;
-	private name: string;
-
-	get Conditions(): string[] { return this.conditions };
-	get Key(): string[] { return this.conditions };
-	get Name(): string[] { return this.conditions };
-
-	constructor(key: string, name: string, conditions: string[]) {
-		this.key = key;
-		this.name = name;
-		this.conditions = conditions;
-	}
-}
-
-let ruleMap: Map<eRuleTypes, RuleInfo> = new Map<eRuleTypes, RuleInfo>();
-ruleMap.set(eRuleTypes.RAINMAKER, new RuleInfo("rainmaker", "Rainmaker", ["rainmaker", "hoko"]));
-ruleMap.set(eRuleTypes.CLAM_BLITZ, new RuleInfo("clam_blitz", "Clam Blitz", ["clam blitz", "asari"]));
-ruleMap.set(eRuleTypes.TOWER_CONTROL, new RuleInfo("tower_control", "Tower Control", ["tower", "yagura"]));
-ruleMap.set(eRuleTypes.SPLAT_ZONES, new RuleInfo("splat_zones", "Splat Zones", ["zones", "zone", "area"]));
 
 export class SplatoonHelper {
 
@@ -51,32 +23,12 @@ export class SplatoonHelper {
 		[240, 45, 125]
 	];
 
-	public static readonly CONDITION_FOR_RULES: string[][] = [
-		["rainmaker", "hoko"],
-		["clam blitz", "asari"],
-		["tower", "yagura"],
-		["zones", "zone", "area"],
-	];
-
 	public static readonly CONDITION_BATTLE_TYPE: string[][] = [
 		["regular", "turf"],
 		["gachi", "ranked", "rank"],
 		["league"],
 	];
 
-	public static readonly RULES_KEY: string[] = [
-		"rainmaker",
-		"clam_blitz",
-		"tower_control",
-		"splat_zones"
-	];
-
-	public static readonly RULES_NAME: string[] = [
-		"Rainmaker",
-		"Clam Blitz",
-		"Tower Control",
-		"Splat Zones"
-	];
 
 	private static readonly IMG_THUMBNAIL: string[] = [
 		"regular.png", "gachi.png", "league.png"
@@ -102,22 +54,6 @@ export class SplatoonHelper {
 		return ret;
 	}
 
-	public static GetRuleByCondition(content: string): eRuleTypes | null {
-		const f = common.has_words;
-		if (f(content, this.CONDITION_FOR_RULES[eRuleTypes.RAINMAKER])) {
-			return eRuleTypes.RAINMAKER;
-		}
-		else if (f(content, this.CONDITION_FOR_RULES[eRuleTypes.CLAM_BLITZ])) {
-			return eRuleTypes.CLAM_BLITZ;
-		}
-		else if (f(content, this.CONDITION_FOR_RULES[eRuleTypes.SPLAT_ZONES])) {
-			return eRuleTypes.SPLAT_ZONES;
-		}
-		else if (f(content, this.CONDITION_FOR_RULES[eRuleTypes.TOWER_CONTROL])) {
-			return eRuleTypes.TOWER_CONTROL;
-		}
-		return null;
-	}
 
 	public static ConditionsProc(conditions: string[][], content: string): boolean {
 		const f = common.has_words;
@@ -154,8 +90,12 @@ export class SplatoonHelper {
 	public static async SplatoonNextRuleProc(params: cCallbackParams, title: string, type: eBattleTypes, rule: eRuleTypes): Promise<void> {
 		return await SplatoonHelper.GetScheduleDetailsEmbed(params, title, type, (info: iScheduleInfo[]) => {
 			let index = -1;
+			let ruleInfo: cRuleInfo = getRuleInfo(rule);
+			if (!ruleInfo) {
+				return -1;
+			}
 			for (let i = 0; i < info.length; ++i) {
-				if (info[i].rule.key == SplatoonHelper.RULES_KEY[rule]) {
+				if (info[i].rule.key == ruleInfo.Key) {
 					index = i;
 					break;
 				}

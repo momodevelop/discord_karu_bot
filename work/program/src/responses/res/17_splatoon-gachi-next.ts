@@ -1,8 +1,8 @@
-﻿import { common } from 'common/common';
-import { SplatoonHelper, eBattleTypes, eRuleTypes } from 'responses/common/SplatoonHelper';
+﻿
+import { SplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
 import { cResponseBase } from 'libs/Responder/cResponseBase';
 import { cCallbackParams } from '../cCallbackParams';
-import { iScheduleInfo } from 'libs/SplatoonInkApi/cSplatoonInkDefines';
+import { getRuleByCondition, cRuleInfo } from 'responses/common/SplatoonData'
 
 class cResponse extends cResponseBase {
 
@@ -19,22 +19,21 @@ class cResponse extends cResponseBase {
 			return false;
 		}
 
-
 		// Check for rule types
-		let rule: eRuleTypes | null = SplatoonHelper.GetRuleByCondition(params.msg.content);
-		if (rule == null) {
+		let ruleInfo: cRuleInfo | null = getRuleByCondition(params.msg.content);
+		if (ruleInfo == null) {
 			let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next Ranked Battle is...!";
 			await SplatoonHelper.SplatoonNextAnyProc(params, title, this.battleType);
 		}
 
 		else {
-			let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next Ranked " + SplatoonHelper.RULES_NAME[rule] + " is...!";
-			await SplatoonHelper.SplatoonNextRuleProc(params, title, this.battleType, rule);
+			let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next Ranked " + ruleInfo.Name + " is...!";
+			await SplatoonHelper.SplatoonNextRuleProc(params, title, this.battleType, ruleInfo.Type);
 		}
 
 		return true;
 	}
-	
+
 }
 
 export = function () {

@@ -91,6 +91,9 @@
     <TypeScriptCompile Include="work\program\src\messages\MsgArrayThanks.ts" />
     <TypeScriptCompile Include="work\program\src\messages\MsgBirthday.ts" />
     <TypeScriptCompile Include="work\program\src\responses\cCallbackParams.ts" />
+    <TypeScriptCompile Include="work\program\src\responses\common\SplatoonData.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="work\program\src\responses\common\SplatoonHelper.ts" />
     <TypeScriptCompile Include="work\program\src\responses\res\15_splatoon-gachi-time.ts" />
     <TypeScriptCompile Include="work\program\src\responses\res\17_splatoon-gachi-next.ts" />
