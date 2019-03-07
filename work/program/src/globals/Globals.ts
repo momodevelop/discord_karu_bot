@@ -1,5 +1,5 @@
 ﻿//import { cJsonDBBotify } from 'libs/JsonDB/cJsonDBBotify'
-import { cSplatoonInkApi } from 'libs/SplatoonInkApi/cSplatoonInkApi'
+import { SplatoonInkApi } from 'libs/SplatoonInkApi/SplatoonInkApi'
 
 class Globals {
 	/*private _jsonDbBotify: cJsonDBBotify = new cJsonDBBotify();
@@ -8,9 +8,9 @@ class Globals {
 		return this._jsonDbBotify;
 	}*/
 
-	private _splatoonInkApi: cSplatoonInkApi = new cSplatoonInkApi();
+	private _splatoonInkApi: SplatoonInkApi = new SplatoonInkApi();
 
-	public get SplatoonInkApi(): cSplatoonInkApi {
+	public get SplatoonInkApi(): SplatoonInkApi {
 		return this._splatoonInkApi;
 	}
 

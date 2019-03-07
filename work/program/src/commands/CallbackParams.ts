@@ -1,7 +1,7 @@
 ﻿import { Client, Message } from 'discord.js';
-import { iCommandCallbackParams } from 'libs/Commander/iCommandCallbackParams';
+import { CommandCallbackParams } from 'libs/Commander/CommandCallbackParams';
 
-export class CallbackParams implements iCommandCallbackParams {
+export class CallbackParams implements CommandCallbackParams {
 	public bot: Client;
 	public msg: Message;
 	public args: string[];

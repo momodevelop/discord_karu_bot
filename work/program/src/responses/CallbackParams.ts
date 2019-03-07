@@ -1,7 +1,7 @@
 ﻿import { Client, Message } from 'discord.js';
-import { iResponseCallbackParams } from 'libs/Responder/iResponseCallbackParams';
+import { ResponseCallbackParams } from 'libs/Responder/ResponseCallbackParams';
 
-export class CallbackParams implements iResponseCallbackParams {
+export class CallbackParams implements ResponseCallbackParams {
 	public bot: Client;
 	public msg: Message;
 

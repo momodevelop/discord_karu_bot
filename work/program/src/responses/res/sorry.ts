@@ -1,9 +1,9 @@
 ﻿import { common } from 'common/common';
-import { cResponseBase } from 'libs/Responder/cResponseBase';
+import { ResponseBase } from 'libs/Responder/ResponseBase';
 import { CallbackParams } from '../CallbackParams'
 import { randMsg } from 'messages/MsgArraySorry'
 
-class cResponse extends cResponseBase {
+class cResponse extends ResponseBase {
 
 	public async exec(params: CallbackParams): Promise<boolean> {
 		let f = common.has_words;

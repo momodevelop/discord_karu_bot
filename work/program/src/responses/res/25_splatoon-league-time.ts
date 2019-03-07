@@ -1,12 +1,12 @@
 ﻿import { common } from 'common/common';
 import { SplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
-import { cResponseBase } from 'libs/Responder/cResponseBase';
+import { ResponseBase } from 'libs/Responder/ResponseBase';
 import { CallbackParams } from '../CallbackParams'
 import { sprintf } from 'sprintf-js'
 
 // Given a specific time, give the map.
 // case 1: karu gachi 10am/pm
-class cResponse extends cResponseBase {
+class cResponse extends ResponseBase {
 
 	private readonly battleType: eBattleTypes = eBattleTypes.LEAGUE;
 	private conditions: string[][] = [

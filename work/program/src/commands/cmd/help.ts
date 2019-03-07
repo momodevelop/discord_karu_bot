@@ -1,8 +1,8 @@
 ﻿import { common } from 'common/common';
-import { cCommandBase } from 'libs/Commander/cCommandBase';
+import { CommandBase } from 'libs/Commander/CommandBase';
 import { CallbackParams } from 'commands/CallbackParams';
 
-class cCommand extends cCommandBase {
+class cCommand extends CommandBase {
 	public readonly name: string = "help";
 
 	public async exec(params: CallbackParams): Promise<void> {

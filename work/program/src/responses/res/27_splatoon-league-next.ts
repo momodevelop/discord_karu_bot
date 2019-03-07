@@ -1,10 +1,10 @@
 ﻿
 import { SplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
-import { cResponseBase } from 'libs/Responder/cResponseBase';
+import { ResponseBase } from 'libs/Responder/ResponseBase';
 import { CallbackParams } from '../CallbackParams';
 import { getRuleByCondition, RuleInfo } from 'responses/common/SplatoonData'
 
-class cResponse extends cResponseBase {
+class cResponse extends ResponseBase {
 
 	private readonly battleType: eBattleTypes = eBattleTypes.LEAGUE;
 	private conditions: string[][] = [

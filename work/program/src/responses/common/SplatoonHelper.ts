@@ -3,8 +3,8 @@ import { common } from 'common/common';
 import { RichEmbedWrapper as Rewrap } from 'common/RichEmbedWrapper';
 import { CallbackParams } from '../CallbackParams';
 import { Message} from 'discord.js';
-import { iSchedule, iScheduleInfo } from 'libs/SplatoonInkApi/cSplatoonInkDefines';
-import { cSplatoonInkApi } from 'libs/SplatoonInkApi/cSplatoonInkApi';
+import { Schedule, ScheduleInfo } from 'libs/SplatoonInkApi/SplatoonInkDefines';
+import { SplatoonInkApi } from 'libs/SplatoonInkApi/SplatoonInkApi';
 import { globals } from 'globals/Globals'
 import { sprintf } from 'sprintf-js';
 import { RuleTypes, getRuleInfo, RuleInfo } from 'responses/common/SplatoonData'
@@ -41,7 +41,7 @@ export class SplatoonHelper {
 	private static readonly NAME_AUTHOR: string = "Karu";
 	private static readonly URL_SPLATOON_WIKI: string = "https://splatoonwiki.org/wiki/";
 	private static readonly IMG_AUTHOR: string = "karu.png"
-	private static GetScheduleFuncByType(type: eBattleTypes, r: iSchedule): iScheduleInfo[] {
+	private static GetScheduleFuncByType(type: eBattleTypes, r: Schedule): ScheduleInfo[] {
 		let ret = r.regular;
 		switch (type) {
 			case eBattleTypes.GACHI:
@@ -70,7 +70,7 @@ export class SplatoonHelper {
 
 	// Gets the stage details by time (using Date)
 	public static async getEmbedScheduleByTime(params: CallbackParams, title: string, type: eBattleTypes, date: Date): Promise<void> {
-		return await SplatoonHelper.getEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
+		return await SplatoonHelper.getEmbedSchedule(params, title, type, (info: ScheduleInfo[]) => {
 			let index = -1;
 			// assumes that info time is form earliest of latest.
 			for (let i = 0; i < info.length; ++i) {
@@ -88,7 +88,7 @@ export class SplatoonHelper {
 
 	// Gets the upcoming rule's stage details
 	public static async getEmbedScheduleNextRule(params: CallbackParams, title: string, type: eBattleTypes, rule: RuleTypes): Promise<void> {
-		return await SplatoonHelper.getEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
+		return await SplatoonHelper.getEmbedSchedule(params, title, type, (info: ScheduleInfo[]) => {
 			let index = -1;
 			let ruleInfo: RuleInfo = getRuleInfo(rule);
 			if (!ruleInfo) {
@@ -106,7 +106,7 @@ export class SplatoonHelper {
 
 	// Gets the upcoming stage details
 	public static async getEmbedScheduleNext(params: CallbackParams, title: string, type: eBattleTypes): Promise<void> {
-		return await SplatoonHelper.getEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
+		return await SplatoonHelper.getEmbedSchedule(params, title, type, (info: ScheduleInfo[]) => {
 			return 1;
 		});
 	}
@@ -114,26 +114,26 @@ export class SplatoonHelper {
 
 	// Gets the current ongoing stage details
 	public static async getEmbedScheduleNow(params: CallbackParams, title: string, type: eBattleTypes): Promise<void> {
-		return await SplatoonHelper.getEmbedSchedule(params, title, type, (info: iScheduleInfo[]) => {
+		return await SplatoonHelper.getEmbedSchedule(params, title, type, (info: ScheduleInfo[]) => {
 			return 0;
 		});
 	}
 
-	public static async getEmbedSchedule(params: CallbackParams, title: string, type: eBattleTypes, scheduleSelectorFunc: (info: iScheduleInfo[]) => number) : Promise<void> {
+	public static async getEmbedSchedule(params: CallbackParams, title: string, type: eBattleTypes, scheduleSelectorFunc: (info: ScheduleInfo[]) => number) : Promise<void> {
 		let currentMessage: Message = <Message>(await params.msg.channel.send("（｀・ω・´）Gimme a sec..."));
 		try {
 			// Call API to get the schedule and locale info
-			const localeJp: any = await cSplatoonInkApi.getLocaleJp();
-			const r: iSchedule = await cSplatoonInkApi.getSchedule();
+			const localeJp: any = await SplatoonInkApi.getLocaleJp();
+			const r: Schedule = await SplatoonInkApi.getSchedule();
 
-			const results: iScheduleInfo[] = this.GetScheduleFuncByType(type, r);
+			const results: ScheduleInfo[] = this.GetScheduleFuncByType(type, r);
 			let index: number = scheduleSelectorFunc(results);
 			if (index < 0) {
 				await currentMessage.edit("(´・ω・`) Sorry, I have no data on that...");
 				return;
 			}
 
-			const result: iScheduleInfo = results[index];
+			const result: ScheduleInfo = results[index];
 			const stageAUrl: string = this.URL_SPLATOON_WIKI + result.stage_a.name.replace(/\s/g, "_");
 			const stageBUrl: string = this.URL_SPLATOON_WIKI + result.stage_b.name.replace(/\s/g, "_");
 			const ruleUrl: string = this.URL_SPLATOON_WIKI + result.rule.name.replace(/\s/g, "_");

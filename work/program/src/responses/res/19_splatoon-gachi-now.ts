@@ -1,8 +1,8 @@
 ﻿import { SplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
-import { cResponseBase } from 'libs/Responder/cResponseBase';
+import { ResponseBase } from 'libs/Responder/ResponseBase';
 import { CallbackParams } from '../CallbackParams'
 
-class cResponse extends cResponseBase {
+class cResponse extends ResponseBase {
 
 	private readonly battleType: eBattleTypes = eBattleTypes.GACHI;
 	private readonly title: string = "(ﾉ≧∇≦)ﾉ ﾐ GACHI!!!"

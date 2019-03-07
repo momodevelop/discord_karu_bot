@@ -4,8 +4,8 @@ require('app-module-path').addPath(__dirname);
 
 // Load libs ////////////////////////////////
 import { Client, Message } from 'discord.js';
-import { cCommander } from 'libs/Commander/cCommander';
-import { cResponder } from 'libs/Responder/cResponder';
+import { Commander } from 'libs/Commander/Commander';
+import { Responder } from 'libs/Responder/Responder';
 import { globals } from 'globals/Globals';
 import { CallbackParams as commandCallbackParams } from 'commands/CallbackParams';
 import { CallbackParams as responseCallbackParams } from 'responses/CallbackParams';
@@ -13,8 +13,8 @@ import { CallbackParams as responseCallbackParams } from 'responses/CallbackPara
 //Set up global variables /////////////////////
 globals.Root = __dirname + "/";
 
-let commander: cCommander = new cCommander();
-let responder: cResponder = new cResponder();
+let commander: Commander = new Commander();
+let responder: Responder = new Responder();
 
 // Discord bot ////////////////////////////
 const prefix: string = process.env.PREFIX || "";

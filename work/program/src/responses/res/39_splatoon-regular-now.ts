@@ -1,10 +1,10 @@
 ﻿//https://github.com/misenhower/splatoon2.ink/wiki/Data-access-policy
 
 import { SplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
-import { cResponseBase } from 'libs/Responder/cResponseBase';
+import { ResponseBase } from 'libs/Responder/ResponseBase';
 import { CallbackParams } from '../CallbackParams'
 
-class cResponse extends cResponseBase {
+class cResponse extends ResponseBase {
 
 	private readonly battleType: eBattleTypes = eBattleTypes.REGULAR;
 	private readonly title: string = "(ﾉ≧∇≦)ﾉ ﾐ TURF!!!"
