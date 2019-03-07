@@ -11,5 +11,3 @@ export const jimpWriteAsync = function (jimpObj: Jimp, outputPath: string): Prom
 		});
 	});
 }
-
-//export const jimpWriteAsync = promisify(Jimp.write);

@@ -28,8 +28,17 @@
   <ItemGroup>
     <Content Include=".gitignore" />
     <Content Include="package-lock.json" />
-    <Content Include="package.json" />
-    <Content Include="tsconfig.json" />
+    <Content Include="work\deploy\control\run.sh" />
+    <Content Include="work\deploy\control\stop.sh" />
+    <Content Include="work\deploy\env\env_dummy" />
+    <Content Include="work\deploy\scripts\0_package.bat" />
+    <Content Include="work\deploy\scripts\1_deploy.bat" />
+    <Content Include="work\deploy\scripts\env_dummy.bat" />
+    <Content Include="work\deploy\scripts\package_exclude_list.txt" />
+    <Content Include="work\deploy\scripts\service_run.bat" />
+    <Content Include="work\deploy\scripts\service_stop.bat" />
+    <Content Include="work\program\package.json" />
+    <Content Include="work\program\tsconfig.json" />
     <Content Include="README.md" />
     <Content Include="work\program\scripts\0_install.bat" />
     <Content Include="work\program\scripts\1_compile.bat" />
@@ -37,6 +46,9 @@
   <ItemGroup>
     <Folder Include="work\" />
     <Folder Include="work\deploy\" />
+    <Folder Include="work\deploy\control\" />
+    <Folder Include="work\deploy\env\" />
+    <Folder Include="work\deploy\scripts\" />
     <Folder Include="work\program\" />
     <Folder Include="work\program\img\" />
     <Folder Include="work\program\scripts\" />

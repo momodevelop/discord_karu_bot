@@ -1,16 +1,12 @@
 ﻿// All the common shit
 import { common } from 'common/common';
 import { RichEmbedWrapper as Rewrap } from 'common/RichEmbedWrapper';
-import { cResponseBase } from 'libs/Responder/cResponseBase';
 import { cCallbackParams } from '../cCallbackParams';
-import { rand_msg } from 'messages/MsgArrayThanks'
-import { Client, Message, RichEmbed } from 'discord.js';
+import { Message} from 'discord.js';
 import { iSchedule, iScheduleInfo } from 'libs/SplatoonInkApi/cSplatoonInkDefines';
 import { cSplatoonInkApi } from 'libs/SplatoonInkApi/cSplatoonInkApi';
 import { Globals } from 'globals/Globals'
 import { sprintf } from 'sprintf-js';
-
-
 
 export enum eBattleTypes {
 	REGULAR = 0,
@@ -165,53 +161,59 @@ export class SplatoonHelper {
 
 	public static async SplatoonMainProc(params: cCallbackParams, title: string, type: eBattleTypes, scheduleSelectorFunc: (info: iScheduleInfo[]) => number) : Promise<void> {
 		let currentMessage: Message = <Message>(await params.msg.channel.send("（｀・ω・´）Gimme a sec..."));
+		try {
 
-		// Call API to get the schedule and locale info
-		const localeJp: any = await cSplatoonInkApi.getLocaleJp();
-		const r: iSchedule = await cSplatoonInkApi.getSchedule();
 
-		
+			// Call API to get the schedule and locale info
+			const localeJp: any = await cSplatoonInkApi.getLocaleJp();
+			const r: iSchedule = await cSplatoonInkApi.getSchedule();
 
-		const results: iScheduleInfo[] = this.GetScheduleFuncByType(type, r);
-		let index: number = scheduleSelectorFunc(results);
-		if (index < 0) {
-			await currentMessage.edit("(´・ω・`) Sorry, I have no data on that...");
-			return;
+
+
+			const results: iScheduleInfo[] = this.GetScheduleFuncByType(type, r);
+			let index: number = scheduleSelectorFunc(results);
+			if (index < 0) {
+				await currentMessage.edit("(´・ω・`) Sorry, I have no data on that...");
+				return;
+			}
+
+			const result: iScheduleInfo = results[index];
+			const stageAUrl: string = this.URL_SPLATOON_WIKI + result.stage_a.name.replace(/\s/g, "_");
+			const stageBUrl: string = this.URL_SPLATOON_WIKI + result.stage_b.name.replace(/\s/g, "_");
+			const ruleUrl: string = this.URL_SPLATOON_WIKI + result.rule.name.replace(/\s/g, "_");
+			const stageAPath: string = Globals.ImgStagesPath + result.stage_a.name + ".jpg";
+			const stageBPath: string = Globals.ImgStagesPath + result.stage_b.name + ".jpg";
+
+			await currentMessage.edit("(｀・ω・´)9  Just a bit more...");
+
+			let embed: Rewrap = new Rewrap();
+			embed.RichEmbed.setTitle(title);
+			embed.RichEmbed.setColor(this.COLOR[type]);
+			(type != eBattleTypes.REGULAR) && embed.RichEmbed.addField("Mode:", sprintf("[%s](%s)\n%s\n", result.rule.name, ruleUrl, localeJp["rules"][result.rule.key].name));
+
+			embed.RichEmbed
+				.addField("Time: ", sprintf("%s - %s", common.simplify_time(result.start_time), common.simplify_time(result.end_time)))
+				.addField("Maps:", sprintf("[%s](%s)\n%s\n[%s](%s)\n%s",
+					result.stage_a.name,
+					stageAUrl,
+					localeJp["stages"][result.stage_a.id].name,
+					result.stage_b.name,
+					stageBUrl,
+					localeJp["stages"][result.stage_b.id].name,
+				));
+
+
+			await embed.SetAuthorWithImg(Globals.ImgPath + this.IMG_AUTHOR, this.IMG_AUTHOR, this.NAME_AUTHOR);
+			await embed.SetThumbnailImg(Globals.ImgPath + this.IMG_THUMBNAIL[type], this.IMG_THUMBNAIL[type]);
+			await embed.SetImgMultiple([stageAPath, stageBPath], Globals.ImgOutPath + this.IMG_OUTPUT_NAME[type], this.IMG_OUTPUT_NAME[type]);
+			await currentMessage.edit("(;;｀・ω・´)9  Almost...there...");
+			await params.msg.channel.send(embed.Finalize());
+			await currentMessage.delete();
 		}
-
-		const result: iScheduleInfo = results[index];
-		const stageAUrl: string = this.URL_SPLATOON_WIKI + result.stage_a.name.replace(/\s/g, "_");
-		const stageBUrl: string = this.URL_SPLATOON_WIKI + result.stage_b.name.replace(/\s/g, "_");
-		const ruleUrl: string = this.URL_SPLATOON_WIKI + result.rule.name.replace(/\s/g, "_");
-		const stageAPath: string = Globals.ImgStagesPath + result.stage_a.name + ".jpg";
-		const stageBPath: string = Globals.ImgStagesPath + result.stage_b.name + ".jpg";
-
-		await currentMessage.edit("(｀・ω・´)9  Just a bit more...");
-
-		let embed: Rewrap = new Rewrap();
-		embed.RichEmbed.setTitle(title);
-		embed.RichEmbed.setColor(this.COLOR[type]);
-		(type != eBattleTypes.REGULAR) && embed.RichEmbed.addField("Mode:", sprintf("[%s](%s)\n%s\n", result.rule.name, ruleUrl, localeJp["rules"][result.rule.key].name));
-
-		embed.RichEmbed
-			.addField("Time: ", sprintf("%s - %s", common.simplify_time(result.start_time), common.simplify_time(result.end_time)))
-			.addField("Maps:", sprintf("[%s](%s)\n%s\n[%s](%s)\n%s",
-				result.stage_a.name,
-				stageAUrl,
-				localeJp["stages"][result.stage_a.id].name,
-				result.stage_b.name,
-				stageBUrl,
-				localeJp["stages"][result.stage_b.id].name,
-			));
-
-
-		await embed.SetAuthorWithImg(Globals.ImgPath + this.IMG_AUTHOR, this.IMG_AUTHOR, this.NAME_AUTHOR);
-		await embed.SetThumbnailImg(Globals.ImgPath + this.IMG_THUMBNAIL[type], this.IMG_THUMBNAIL[type]);
-		await embed.SetImgMultiple([stageAPath, stageBPath], Globals.ImgOutPath + this.IMG_OUTPUT_NAME[type], this.IMG_OUTPUT_NAME[type]);
-		await currentMessage.edit("(;;｀・ω・´)9  Almost...there...");
-		await params.msg.channel.send(embed.Finalize());
-		await currentMessage.delete();
-
+		catch (e) {
+			console.error(e);
+			await currentMessage.edit("(´・ω・`) Call Momo...something went wrong...");
+		}
 	}
 }
 
