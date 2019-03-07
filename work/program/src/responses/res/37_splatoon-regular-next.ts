@@ -16,7 +16,7 @@ class cResponse extends cResponseBase {
 		}
 
 		let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next Turf Wars is...!";
-		await SplatoonHelper.SplatoonNextAnyProc(params, title, this.battleType);
+		await SplatoonHelper.GetEmbedScheduleNext(params, title, this.battleType);
 
 		return true;
 	}

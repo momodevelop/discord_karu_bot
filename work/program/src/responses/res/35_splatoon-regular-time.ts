@@ -27,7 +27,7 @@ class cResponse extends cResponseBase {
 		}
 
 		let title: string = sprintf("(ﾉ≧∇≦)ﾉ ﾐ The Turf Wars at the %02d%02dhrs is...!", date.getHours(), date.getMinutes());
-		await SplatoonHelper.SplatoonTimeProc(params, title, this.battleType, date);
+		await SplatoonHelper.GetEmbedScheduleByTime(params, title, this.battleType, date);
 	
 
 		return true;

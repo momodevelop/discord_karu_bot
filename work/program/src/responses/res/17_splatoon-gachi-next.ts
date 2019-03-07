@@ -23,12 +23,12 @@ class cResponse extends cResponseBase {
 		let ruleInfo: cRuleInfo | null = getRuleByCondition(params.msg.content);
 		if (ruleInfo == null) {
 			let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next Ranked Battle is...!";
-			await SplatoonHelper.SplatoonNextAnyProc(params, title, this.battleType);
+			await SplatoonHelper.GetEmbedScheduleNext(params, title, this.battleType);
 		}
 
 		else {
 			let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next Ranked " + ruleInfo.Name + " is...!";
-			await SplatoonHelper.SplatoonNextRuleProc(params, title, this.battleType, ruleInfo.Type);
+			await SplatoonHelper.GetEmbedScheduleNextRule(params, title, this.battleType, ruleInfo.Type);
 		}
 
 		return true;

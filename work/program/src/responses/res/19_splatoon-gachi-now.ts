@@ -15,7 +15,7 @@ class cResponse extends cResponseBase {
 			return false;
 		}
 
-		await SplatoonHelper.SplatoonNowProc(params, this.title, this.battleType);
+		await SplatoonHelper.GetEmbedScheduleNow(params, this.title, this.battleType);
 
 		return true;
 	}
