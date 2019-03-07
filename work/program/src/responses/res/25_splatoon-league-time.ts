@@ -1,7 +1,7 @@
 ﻿import { common } from 'common/common';
 import { SplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
 import { cResponseBase } from 'libs/Responder/cResponseBase';
-import { cCallbackParams } from '../cCallbackParams';
+import { CallbackParams } from '../CallbackParams'
 import { sprintf } from 'sprintf-js'
 
 // Given a specific time, give the map.
@@ -13,7 +13,7 @@ class cResponse extends cResponseBase {
 		SplatoonHelper.CONDITION_BATTLE_TYPE[this.battleType],
 	];
 
-	public async exec(params: cCallbackParams): Promise<boolean> {
+	public async exec(params: CallbackParams): Promise<boolean> {
 
 		if (!SplatoonHelper.ConditionsProc(this.conditions, params.msg.content)) {
 			return false;

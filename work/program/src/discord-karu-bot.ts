@@ -6,12 +6,12 @@ require('app-module-path').addPath(__dirname);
 import { Client, Message } from 'discord.js';
 import { cCommander } from 'libs/Commander/cCommander';
 import { cResponder } from 'libs/Responder/cResponder';
-import { Globals } from 'globals/Globals';
-import { cCallbackParams as commandCallbackParams } from 'commands/cCallbackParams';
-import { cCallbackParams as responseCallbackParams } from 'responses/cCallbackParams';
+import { globals } from 'globals/Globals';
+import { CallbackParams as commandCallbackParams } from 'commands/CallbackParams';
+import { CallbackParams as responseCallbackParams } from 'responses/CallbackParams';
 
 //Set up global variables /////////////////////
-Globals.Root = __dirname + "/";
+globals.Root = __dirname + "/";
 
 let commander: cCommander = new cCommander();
 let responder: cResponder = new cResponder();

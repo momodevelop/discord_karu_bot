@@ -2,7 +2,7 @@
 
 import { SplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
 import { cResponseBase } from 'libs/Responder/cResponseBase';
-import { cCallbackParams } from '../cCallbackParams';
+import { CallbackParams } from '../CallbackParams'
 
 class cResponse extends cResponseBase {
 
@@ -12,7 +12,7 @@ class cResponse extends cResponseBase {
 		SplatoonHelper.CONDITION_BATTLE_TYPE[eBattleTypes.REGULAR]
 	];
 
-	public async exec(params: cCallbackParams): Promise<boolean> {				
+	public async exec(params: CallbackParams): Promise<boolean> {				
 		if (!SplatoonHelper.ConditionsProc(this.conditions, params.msg.content)) {
 			return false;
 		}

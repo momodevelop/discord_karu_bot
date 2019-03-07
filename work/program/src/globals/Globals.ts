@@ -1,7 +1,7 @@
 ﻿//import { cJsonDBBotify } from 'libs/JsonDB/cJsonDBBotify'
 import { cSplatoonInkApi } from 'libs/SplatoonInkApi/cSplatoonInkApi'
 
-class cGlobals {
+class Globals {
 	/*private _jsonDbBotify: cJsonDBBotify = new cJsonDBBotify();
 
 	public get JsonDb(): cJsonDBBotify {
@@ -35,4 +35,4 @@ class cGlobals {
 	}
 };
 
-export let Globals: cGlobals = new cGlobals(); 
+export let globals: Globals = new Globals(); 

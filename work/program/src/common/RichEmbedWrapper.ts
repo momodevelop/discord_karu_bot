@@ -4,14 +4,14 @@ import { writeFileAsync, jimpWriteAsync } from './promisify';
 import * as mergeImg from 'merge-img';
 import Jimp from 'jimp-custom';
 
-interface iFiles {
+interface Files {
 	attachment: string;
 	name: string;
 }
 
 export class RichEmbedWrapper {
 	private _richEmbedObj: RichEmbed;
-	private _files: iFiles[];
+	private _files: Files[];
 
 	constructor() {
 		this._richEmbedObj = new RichEmbed();
@@ -22,9 +22,9 @@ export class RichEmbedWrapper {
 		return this._richEmbedObj;
 	}
 
-	public async SetAuthorWithImg(path: string, name: string, authorName: string): Promise<boolean> {
-		if (await this.AddAttachment(path, name)) {
-			this.RichEmbed.setAuthor(authorName, RichEmbedWrapper.GetAttachmentStr(name));
+	public async getAuthorWithImg(path: string, name: string, authorName: string): Promise<boolean> {
+		if (await this.addAttachment(path, name)) {
+			this.RichEmbed.setAuthor(authorName, RichEmbedWrapper.getAttachmentStr(name));
 			return true;
 		}
 		return false;
@@ -32,7 +32,7 @@ export class RichEmbedWrapper {
 	}
 
 	// TODO: reject multiple names when adding files
-	public async AddAttachment(path: string, name: string): Promise<boolean> {
+	public async addAttachment(path: string, name: string): Promise<boolean> {
 		if (await common.file_exists(path)) {
 			this._files.push({
 				attachment: path,
@@ -43,29 +43,29 @@ export class RichEmbedWrapper {
 		return false;
 	}
 
-	public async SetThumbnailImg(path: string, name: string): Promise<boolean> {
-		if (await this.AddAttachment(path, name)) {
-			this.RichEmbed.setThumbnail(RichEmbedWrapper.GetAttachmentStr(name));
+	public async setThumbnailImg(path: string, name: string): Promise<boolean> {
+		if (await this.addAttachment(path, name)) {
+			this.RichEmbed.setThumbnail(RichEmbedWrapper.getAttachmentStr(name));
 			return true;
 		}
 		return false;
 	}
 
-	public static GetAttachmentStr(name: string): string {
+	public static getAttachmentStr(name: string): string {
 		return "attachment://" + name;
 	}
 
-	public async SetImg(path: string, name: string): Promise<boolean> {
-		if (await this.AddAttachment(path, name)) {
-			this.RichEmbed.setImage(RichEmbedWrapper.GetAttachmentStr(name));
+	public async setImg(path: string, name: string): Promise<boolean> {
+		if (await this.addAttachment(path, name)) {
+			this.RichEmbed.setImage(RichEmbedWrapper.getAttachmentStr(name));
 			return true;
 		}
 		return false;
 	}
 
-	public async SetImgMultiple(paths: string[], outputPath: string, name: string): Promise<boolean> {
+	public async setImgMultiple(paths: string[], outputPath: string, name: string): Promise<boolean> {
 		if (paths.length <= 1) {
-			console.error("SetImgMultiple expects more than 1 paths!");
+			console.error("setImgMultiple expects more than 1 paths!");
 			return false;
 		}
 
@@ -80,16 +80,16 @@ export class RichEmbedWrapper {
 		let img: Jimp = await mergeImg(paths);
 		await jimpWriteAsync(img, outputPath);
 
-		if (!await this.AddAttachment(outputPath, name)) {
+		if (!await this.addAttachment(outputPath, name)) {
 			return false;
 		}
 
-		this.RichEmbed.setImage(RichEmbedWrapper.GetAttachmentStr(name));
+		this.RichEmbed.setImage(RichEmbedWrapper.getAttachmentStr(name));
 		return true;
 
 	}
 
-	public Finalize(): RichEmbed {
+	public finalize(): RichEmbed {
 		this._richEmbedObj.attachFiles(this._files);
 		return this._richEmbedObj;
 	}
