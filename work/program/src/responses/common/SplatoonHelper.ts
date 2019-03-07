@@ -21,7 +21,27 @@ export enum eRuleTypes {
 	SPLAT_ZONES
 }
 
+class RuleInfo {
+	private conditions: string[];
+	private key: string;
+	private name: string;
 
+	get Conditions(): string[] { return this.conditions };
+	get Key(): string[] { return this.conditions };
+	get Name(): string[] { return this.conditions };
+
+	constructor(key: string, name: string, conditions: string[]) {
+		this.key = key;
+		this.name = name;
+		this.conditions = conditions;
+	}
+}
+
+let ruleMap: Map<eRuleTypes, RuleInfo> = new Map<eRuleTypes, RuleInfo>();
+ruleMap.set(eRuleTypes.RAINMAKER, new RuleInfo("rainmaker", "Rainmaker", ["rainmaker", "hoko"]));
+ruleMap.set(eRuleTypes.CLAM_BLITZ, new RuleInfo("clam_blitz", "Clam Blitz", ["clam blitz", "asari"]));
+ruleMap.set(eRuleTypes.TOWER_CONTROL, new RuleInfo("tower_control", "Tower Control", ["tower", "yagura"]));
+ruleMap.set(eRuleTypes.SPLAT_ZONES, new RuleInfo("splat_zones", "Splat Zones", ["zones", "zone", "area"]));
 
 export class SplatoonHelper {
 
@@ -46,14 +66,14 @@ export class SplatoonHelper {
 
 	public static readonly RULES_KEY: string[] = [
 		"rainmaker",
-		"clam blitz",
+		"clam_blitz",
 		"tower_control",
 		"splat_zones"
 	];
 
 	public static readonly RULES_NAME: string[] = [
 		"Rainmaker",
-		"Clam",
+		"Clam Blitz",
 		"Tower Control",
 		"Splat Zones"
 	];
@@ -114,7 +134,7 @@ export class SplatoonHelper {
 
 	// Gets the stage details by time (using Date)
 	public static async SplatoonTimeProc(params: cCallbackParams, title: string, type: eBattleTypes, date: Date): Promise<void> {
-		return await SplatoonHelper.SplatoonMainProc(params, title, type, (info: iScheduleInfo[]) => {
+		return await SplatoonHelper.GetScheduleDetailsEmbed(params, title, type, (info: iScheduleInfo[]) => {
 			let index = -1;
 			// assumes that info time is form earliest of latest.
 			for (let i = 0; i < info.length; ++i) {
@@ -132,7 +152,7 @@ export class SplatoonHelper {
 
 	// Gets the upcoming rule's stage details
 	public static async SplatoonNextRuleProc(params: cCallbackParams, title: string, type: eBattleTypes, rule: eRuleTypes): Promise<void> {
-		return await SplatoonHelper.SplatoonMainProc(params, title, type, (info: iScheduleInfo[]) => {
+		return await SplatoonHelper.GetScheduleDetailsEmbed(params, title, type, (info: iScheduleInfo[]) => {
 			let index = -1;
 			for (let i = 0; i < info.length; ++i) {
 				if (info[i].rule.key == SplatoonHelper.RULES_KEY[rule]) {
@@ -146,7 +166,7 @@ export class SplatoonHelper {
 
 	// Gets the upcoming stage details
 	public static async SplatoonNextAnyProc(params: cCallbackParams, title: string, type: eBattleTypes): Promise<void> {
-		return await SplatoonHelper.SplatoonMainProc(params, title, type, (info: iScheduleInfo[]) => {
+		return await SplatoonHelper.GetScheduleDetailsEmbed(params, title, type, (info: iScheduleInfo[]) => {
 			return 1;
 		});
 	}
@@ -154,21 +174,17 @@ export class SplatoonHelper {
 
 	// Gets the current ongoing stage details
 	public static async SplatoonNowProc(params: cCallbackParams, title: string, type: eBattleTypes): Promise<void> {
-		return await SplatoonHelper.SplatoonMainProc(params, title, type, (info: iScheduleInfo[]) => {
+		return await SplatoonHelper.GetScheduleDetailsEmbed(params, title, type, (info: iScheduleInfo[]) => {
 			return 0;
 		});
 	}
 
-	public static async SplatoonMainProc(params: cCallbackParams, title: string, type: eBattleTypes, scheduleSelectorFunc: (info: iScheduleInfo[]) => number) : Promise<void> {
+	public static async GetScheduleDetailsEmbed(params: cCallbackParams, title: string, type: eBattleTypes, scheduleSelectorFunc: (info: iScheduleInfo[]) => number) : Promise<void> {
 		let currentMessage: Message = <Message>(await params.msg.channel.send("（｀・ω・´）Gimme a sec..."));
 		try {
-
-
 			// Call API to get the schedule and locale info
 			const localeJp: any = await cSplatoonInkApi.getLocaleJp();
 			const r: iSchedule = await cSplatoonInkApi.getSchedule();
-
-
 
 			const results: iScheduleInfo[] = this.GetScheduleFuncByType(type, r);
 			let index: number = scheduleSelectorFunc(results);
