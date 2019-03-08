@@ -34,7 +34,7 @@ export class Commander {
 		return false;
 	}
 
-		public async parseDir(path: string): Promise<void> {
+	public async parseDir(path: string): Promise<void> {
 		let files: string[] = await readdirAsync(path);
 		for (let i: number = 0; i < files.length; ++i) {
 			let filename_split = files[i].split(/\.(.+)/);

@@ -1,6 +1,6 @@
 ﻿//https://github.com/misenhower/splatoon2.ink/wiki/Data-access-policy
 import { Battle } from 'responses/common/SplatoonData'
-import { SplatoonHelper } from 'responses/common/SplatoonHelper';
+import { Utils } from 'responses/common/SplatoonUtils';
 import { ResponseBase } from 'libs/Responder/ResponseBase';
 import { CallbackParams } from '../CallbackParams';
 import { hasWords } from 'common/common';
@@ -15,7 +15,7 @@ class cResponse extends ResponseBase {
 			return false;
 		}
 
-		await SplatoonHelper.getEmbedScheduleNow(params, this.title, this.battleInfo.type);
+		await Utils.getEmbedScheduleNow(params, this.title, this.battleInfo.type);
 		return true;
 	}
 }

@@ -1,4 +1,4 @@
-﻿import { SplatoonHelper } from 'responses/common/SplatoonHelper';
+﻿import { Utils } from 'responses/common/SplatoonUtils';
 import { Battle } from 'responses/common/SplatoonData'
 import { ResponseBase } from 'libs/Responder/ResponseBase';
 import { CallbackParams } from '../CallbackParams'
@@ -14,7 +14,7 @@ class cResponse extends ResponseBase {
 			return false;
 		}
 
-		await SplatoonHelper.getEmbedScheduleNow(params, this.title, this.battleInfo.type);
+		await Utils.getEmbedScheduleNow(params, this.title, this.battleInfo.type);
 
 		return true;
 	}

@@ -1,4 +1,4 @@
-﻿import { SplatoonHelper } from 'responses/common/SplatoonHelper';
+﻿import { Utils } from 'responses/common/SplatoonUtils';
 import { Battle } from 'responses/common/SplatoonData'
 import { ResponseBase } from 'libs/Responder/ResponseBase';
 import { CallbackParams } from '../CallbackParams';
@@ -15,7 +15,7 @@ class cResponse extends ResponseBase {
 
 
 		let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next Turf Wars is...!";
-		await SplatoonHelper.getEmbedScheduleNext(params, title, this.battleInfo.type);
+		await Utils.getEmbedScheduleNext(params, title, this.battleInfo.type);
 
 		return true;
 	}

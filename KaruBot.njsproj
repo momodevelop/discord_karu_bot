@@ -93,7 +93,7 @@
     <TypeScriptCompile Include="work\program\src\responses\common\SplatoonData.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="work\program\src\responses\common\SplatoonHelper.ts" />
+    <TypeScriptCompile Include="work\program\src\responses\common\SplatoonUtils.ts" />
     <TypeScriptCompile Include="work\program\src\responses\res\15_splatoon-gachi-time.ts" />
     <TypeScriptCompile Include="work\program\src\responses\res\17_splatoon-gachi-next.ts" />
     <TypeScriptCompile Include="work\program\src\responses\res\19_splatoon-gachi-now.ts" />

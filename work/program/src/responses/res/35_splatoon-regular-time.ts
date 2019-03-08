@@ -1,5 +1,5 @@
 ﻿import { parseTime, hasWords } from 'common/common';
-import { SplatoonHelper } from 'responses/common/SplatoonHelper';
+import { Utils } from 'responses/common/SplatoonUtils';
 import { Battle } from 'responses/common/SplatoonData'
 import { ResponseBase } from 'libs/Responder/ResponseBase';
 import { CallbackParams } from '../CallbackParams'
@@ -22,7 +22,7 @@ class cResponse extends ResponseBase {
 		}
 
 		let title: string = sprintf("(ﾉ≧∇≦)ﾉ ﾐ The Turf Wars at the %02d%02dhrs is...!", date.getHours(), date.getMinutes());
-		await SplatoonHelper.getEmbedScheduleByTime(params, title, this.battleInfo.type, date);
+		await Utils.getEmbedScheduleByTime(params, title, this.battleInfo.type, date);
 	
 
 		return true;

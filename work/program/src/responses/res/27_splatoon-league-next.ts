@@ -1,5 +1,5 @@
 ﻿
-import { SplatoonHelper } from 'responses/common/SplatoonHelper';
+import { Utils } from 'responses/common/SplatoonUtils';
 import { Battle, Rule } from 'responses/common/SplatoonData'
 import { ResponseBase } from 'libs/Responder/ResponseBase';
 import { CallbackParams } from '../CallbackParams';
@@ -18,12 +18,12 @@ class cResponse extends ResponseBase {
 		let ruleInfo: Rule.Info | null = Rule.getRuleByCondition(params.msg.content);
 		if (ruleInfo == null) {
 			let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next League Battle is...!";
-			await SplatoonHelper.getEmbedScheduleNext(params, title, this.battleInfo.type);
+			await Utils.getEmbedScheduleNext(params, title, this.battleInfo.type);
 		}
 
 		else {
 			let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next League " + ruleInfo.name + " is...!";
-			await SplatoonHelper.getEmbedScheduleNextRule(params, title, this.battleInfo.type, ruleInfo.type);
+			await Utils.getEmbedScheduleNextRule(params, title, this.battleInfo.type, ruleInfo.type);
 		}
 
 		return true;
