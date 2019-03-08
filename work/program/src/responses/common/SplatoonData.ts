@@ -10,10 +10,10 @@ export namespace Rule {
 	}
 
 	export class Info {
-		public readonly conditions: string[];
-		public readonly key: string;
-		public readonly name: string;
-		public readonly type: Types;
+		public readonly conditions: string[];	// Used to identify the Info based on user input
+		public readonly key: string;			// Used to identify the Info with the key given by SplatoonInkApi
+		public readonly name: string;			// Used for output
+		public readonly type: Types;			// Main idenitifier, like a 'Primary Key'
 
 		constructor(type: Types, key: string, name: string, conditions: string[]) {
 			this.type = type;
@@ -53,11 +53,11 @@ export namespace Battle {
 	}
 
 	export class Info {
-		public readonly color: [number, number, number];
-		public readonly thumbnailImg: string;
-		public readonly outputImg: string;
-		public readonly conditions: string[];
-		public readonly type: Types;
+		public readonly color: [number, number, number];	// Color for output
+		public readonly thumbnailImg: string;				// thumbnail to use for output
+		public readonly outputImg: string;					// name of output file for output
+		public readonly conditions: string[];				// Used to identify the Info based on user input
+		public readonly type: Types;						// Main idenitifier, like a 'Primary Key'
 
 		constructor(type: Types, outputImg: string, thumbnailImg: string, color: [number, number, number], conditions: string[]) {
 			this.type = type;
