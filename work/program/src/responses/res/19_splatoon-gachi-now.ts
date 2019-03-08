@@ -1,21 +1,20 @@
-﻿import { SplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
+﻿import { SplatoonHelper } from 'responses/common/SplatoonHelper';
+import { Battle } from 'responses/common/SplatoonData'
 import { ResponseBase } from 'libs/Responder/ResponseBase';
 import { CallbackParams } from '../CallbackParams'
+import { hasWords } from 'common/common';
 
 class cResponse extends ResponseBase {
 
-	private readonly battleType: eBattleTypes = eBattleTypes.GACHI;
+	private readonly battleInfo: Battle.Info = Battle.getInfo(Battle.Types.GACHI);
 	private readonly title: string = "(ﾉ≧∇≦)ﾉ ﾐ GACHI!!!"
-	private readonly conditions: string[][] = [
-		SplatoonHelper.CONDITION_BATTLE_TYPE[this.battleType]
-	];
 
 	public async exec(params: CallbackParams): Promise<boolean> {
-		if (!SplatoonHelper.ConditionsProc(this.conditions, params.msg.content)) {
+		if (!hasWords(params.msg.content, this.battleInfo.conditions)) {
 			return false;
 		}
 
-		await SplatoonHelper.getEmbedScheduleNow(params, this.title, this.battleType);
+		await SplatoonHelper.getEmbedScheduleNow(params, this.title, this.battleInfo.type);
 
 		return true;
 	}

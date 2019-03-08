@@ -1,5 +1,6 @@
-﻿import { parseTime } from 'common/common';
-import { SplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
+﻿import { parseTime, hasWords } from 'common/common';
+import { SplatoonHelper } from 'responses/common/SplatoonHelper';
+import { Battle } from 'responses/common/SplatoonData'
 import { ResponseBase } from 'libs/Responder/ResponseBase';
 import { CallbackParams } from '../CallbackParams'
 import { sprintf } from 'sprintf-js'
@@ -8,14 +9,10 @@ import { sprintf } from 'sprintf-js'
 // case 1: karu gachi 10am/pm
 class cResponse extends ResponseBase {
 
-	private readonly battleType: eBattleTypes = eBattleTypes.LEAGUE;
-	private conditions: string[][] = [
-		SplatoonHelper.CONDITION_BATTLE_TYPE[this.battleType],
-	];
+	private readonly battleInfo: Battle.Info = Battle.getInfo(Battle.Types.LEAGUE);
 
 	public async exec(params: CallbackParams): Promise<boolean> {
-
-		if (!SplatoonHelper.ConditionsProc(this.conditions, params.msg.content)) {
+		if (!hasWords(params.msg.content, this.battleInfo.conditions)) {
 			return false;
 		}
 
@@ -25,7 +22,7 @@ class cResponse extends ResponseBase {
 		}
 
 		let title: string = sprintf("(ﾉ≧∇≦)ﾉ ﾐ The League Battle at the %02d%02dhrs is...!", date.getHours(), date.getMinutes());
-		await SplatoonHelper.getEmbedScheduleByTime(params, title, this.battleType, date);
+		await SplatoonHelper.getEmbedScheduleByTime(params, title, this.battleInfo.type, date);
 	
 
 		return true;

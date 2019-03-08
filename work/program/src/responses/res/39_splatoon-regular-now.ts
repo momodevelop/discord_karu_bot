@@ -1,23 +1,21 @@
 ﻿//https://github.com/misenhower/splatoon2.ink/wiki/Data-access-policy
-
-import { SplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
+import { Battle } from 'responses/common/SplatoonData'
+import { SplatoonHelper } from 'responses/common/SplatoonHelper';
 import { ResponseBase } from 'libs/Responder/ResponseBase';
-import { CallbackParams } from '../CallbackParams'
+import { CallbackParams } from '../CallbackParams';
+import { hasWords } from 'common/common';
 
 class cResponse extends ResponseBase {
 
-	private readonly battleType: eBattleTypes = eBattleTypes.REGULAR;
 	private readonly title: string = "(ﾉ≧∇≦)ﾉ ﾐ TURF!!!"
-	private readonly conditions: string[][] = [
-		SplatoonHelper.CONDITION_BATTLE_TYPE[eBattleTypes.REGULAR]
-	];
+	private readonly battleInfo: Battle.Info = Battle.getInfo(Battle.Types.LEAGUE);
 
-	public async exec(params: CallbackParams): Promise<boolean> {				
-		if (!SplatoonHelper.ConditionsProc(this.conditions, params.msg.content)) {
+	public async exec(params: CallbackParams): Promise<boolean> {
+		if (!hasWords(params.msg.content, this.battleInfo.conditions)) {
 			return false;
 		}
 
-		await SplatoonHelper.getEmbedScheduleNow(params, this.title, this.battleType);
+		await SplatoonHelper.getEmbedScheduleNow(params, this.title, this.battleInfo.type);
 		return true;
 	}
 }

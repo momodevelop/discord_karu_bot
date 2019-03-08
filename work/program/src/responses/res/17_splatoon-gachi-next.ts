@@ -1,34 +1,29 @@
 ﻿
-import { SplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
+import { SplatoonHelper } from 'responses/common/SplatoonHelper';
 import { ResponseBase } from 'libs/Responder/ResponseBase';
-import { CallbackParams } from '../CallbackParams'
-import { getRuleByCondition, RuleInfo } from 'responses/common/SplatoonData'
+import { CallbackParams } from '../CallbackParams';
+import { hasWords } from 'common/common';
+import { Battle, Rule } from 'responses/common/SplatoonData';
 
 class cResponse extends ResponseBase {
 
-	private readonly battleType: eBattleTypes = eBattleTypes.GACHI;
-	private conditions: string[][] = [
-		SplatoonHelper.CONDITION_BATTLE_TYPE[this.battleType],
-		["next"],
-	];
+	private readonly battleInfo: Battle.Info = Battle.getInfo(Battle.Types.GACHI);
 
 	public async exec(params: CallbackParams): Promise<boolean> {
-
-
-		if (!SplatoonHelper.ConditionsProc(this.conditions, params.msg.content)) {
+		if (!hasWords(params.msg.content, this.battleInfo.conditions.concat(["next"]))) {
 			return false;
 		}
 
 		// Check for rule types
-		let ruleInfo: RuleInfo | null = getRuleByCondition(params.msg.content);
+		let ruleInfo: Rule.Info | null = Rule.getRuleByCondition(params.msg.content);
 		if (ruleInfo == null) {
 			let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next Ranked Battle is...!";
-			await SplatoonHelper.getEmbedScheduleNext(params, title, this.battleType);
+			await SplatoonHelper.getEmbedScheduleNext(params, title, this.battleInfo.type);
 		}
 
 		else {
-			let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next Ranked " + ruleInfo.Name + " is...!";
-			await SplatoonHelper.getEmbedScheduleNextRule(params, title, this.battleType, ruleInfo.Type);
+			let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next Ranked " + ruleInfo.name + " is...!";
+			await SplatoonHelper.getEmbedScheduleNextRule(params, title, this.battleInfo.type, ruleInfo.type);
 		}
 
 		return true;

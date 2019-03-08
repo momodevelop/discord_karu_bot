@@ -7,69 +7,33 @@ import { Schedule, ScheduleInfo } from 'libs/SplatoonInkApi/SplatoonInkDefines';
 import { SplatoonInkApi } from 'libs/SplatoonInkApi/SplatoonInkApi';
 import { globals } from 'globals/Globals'
 import { sprintf } from 'sprintf-js';
-import { RuleTypes, getRuleInfo, RuleInfo } from 'responses/common/SplatoonData'
-
-export enum eBattleTypes {
-	REGULAR = 0,
-	GACHI,
-	LEAGUE	
-}
+import {
+	Rule,
+	Battle,
+} from 'responses/common/SplatoonData'
 
 export class SplatoonHelper {
-
-	public static readonly COLOR: [number, number, number][] = [
-		[207, 246, 34],
-		[245, 73, 16],
-		[240, 45, 125]
-	];
-
-	public static readonly CONDITION_BATTLE_TYPE: string[][] = [
-		["regular", "turf"],
-		["gachi", "ranked", "rank"],
-		["league"],
-	];
-
-
-	private static readonly IMG_THUMBNAIL: string[] = [
-		"regular.png", "gachi.png", "league.png"
-	];
-
-	private static readonly IMG_OUTPUT_NAME: string[] = [
-		"out_regular.jpg", "out_gachi.jpg", "out_league.jpg"
-	]
 
 	private static readonly NAME_AUTHOR: string = "Karu";
 	private static readonly URL_SPLATOON_WIKI: string = "https://splatoonwiki.org/wiki/";
 	private static readonly IMG_AUTHOR: string = "karu.png"
-	private static GetScheduleFuncByType(type: eBattleTypes, r: Schedule): ScheduleInfo[] {
+
+	private static GetScheduleFuncByBattleType(battleType: Battle.Types, r: Schedule): ScheduleInfo[] {
 		let ret = r.regular;
-		switch (type) {
-			case eBattleTypes.GACHI:
+		switch (battleType) {
+			case Battle.Types.GACHI:
 				ret = r.gachi;
 				break;
-			case eBattleTypes.LEAGUE:
+			case Battle.Types.LEAGUE:
 				ret = r.league;
 				break;
 		}
 		return ret;
 	}
 
-
-	public static ConditionsProc(conditions: string[][], content: string): boolean {
-		for (let i = 0; i < conditions.length; ++i) {
-			if (!hasWords(content, conditions[i])) {
-				return false;
-			}
-		}
-		return true;
-
-	}
-
-
-
 	// Gets the stage details by time (using Date)
-	public static async getEmbedScheduleByTime(params: CallbackParams, title: string, type: eBattleTypes, date: Date): Promise<void> {
-		return await SplatoonHelper.getEmbedSchedule(params, title, type, (info: ScheduleInfo[]) => {
+	public static async getEmbedScheduleByTime(params: CallbackParams, title: string, battleType: Battle.Types, date: Date): Promise<void> {
+		return await SplatoonHelper.getEmbedSchedule(params, title, battleType, (info: ScheduleInfo[]) => {
 			let index = -1;
 			// assumes that info time is form earliest of latest.
 			for (let i = 0; i < info.length; ++i) {
@@ -86,15 +50,15 @@ export class SplatoonHelper {
 	}
 
 	// Gets the upcoming rule's stage details
-	public static async getEmbedScheduleNextRule(params: CallbackParams, title: string, type: eBattleTypes, rule: RuleTypes): Promise<void> {
-		return await SplatoonHelper.getEmbedSchedule(params, title, type, (info: ScheduleInfo[]) => {
+	public static async getEmbedScheduleNextRule(params: CallbackParams, title: string, battleType: Battle.Types, rule: Rule.Types): Promise<void> {
+		return await SplatoonHelper.getEmbedSchedule(params, title, battleType, (info: ScheduleInfo[]) => {
 			let index = -1;
-			let ruleInfo: RuleInfo = getRuleInfo(rule);
+			let ruleInfo: Rule.Info = Rule.getInfo(rule);
 			if (!ruleInfo) {
 				return -1;
 			}
 			for (let i = 0; i < info.length; ++i) {
-				if (info[i].rule.key == ruleInfo.Key) {
+				if (info[i].rule.key == ruleInfo.key) {
 					index = i;
 					break;
 				}
@@ -104,28 +68,28 @@ export class SplatoonHelper {
 	}
 
 	// Gets the upcoming stage details
-	public static async getEmbedScheduleNext(params: CallbackParams, title: string, type: eBattleTypes): Promise<void> {
-		return await SplatoonHelper.getEmbedSchedule(params, title, type, (info: ScheduleInfo[]) => {
+	public static async getEmbedScheduleNext(params: CallbackParams, title: string, battleType: Battle.Types): Promise<void> {
+		return await SplatoonHelper.getEmbedSchedule(params, title, battleType, (info: ScheduleInfo[]) => {
 			return 1;
 		});
 	}
 
 
 	// Gets the current ongoing stage details
-	public static async getEmbedScheduleNow(params: CallbackParams, title: string, type: eBattleTypes): Promise<void> {
-		return await SplatoonHelper.getEmbedSchedule(params, title, type, (info: ScheduleInfo[]) => {
+	public static async getEmbedScheduleNow(params: CallbackParams, title: string, battleType: Battle.Types): Promise<void> {
+		return await SplatoonHelper.getEmbedSchedule(params, title, battleType, (info: ScheduleInfo[]) => {
 			return 0;
 		});
 	}
 
-	public static async getEmbedSchedule(params: CallbackParams, title: string, type: eBattleTypes, scheduleSelectorFunc: (info: ScheduleInfo[]) => number) : Promise<void> {
+	public static async getEmbedSchedule(params: CallbackParams, title: string, battleType: Battle.Types, scheduleSelectorFunc: (info: ScheduleInfo[]) => number) : Promise<void> {
 		let currentMessage: Message = <Message>(await params.msg.channel.send("（｀・ω・´）Gimme a sec..."));
 		try {
 			// Call API to get the schedule and locale info
 			const localeJp: any = await SplatoonInkApi.getLocaleJp();
 			const r: Schedule = await SplatoonInkApi.getSchedule();
 
-			const results: ScheduleInfo[] = this.GetScheduleFuncByType(type, r);
+			const results: ScheduleInfo[] = this.GetScheduleFuncByBattleType(battleType, r);
 			let index: number = scheduleSelectorFunc(results);
 			if (index < 0) {
 				await currentMessage.edit("(´・ω・`) Sorry, I have no data on that...");
@@ -138,13 +102,14 @@ export class SplatoonHelper {
 			const ruleUrl: string = this.URL_SPLATOON_WIKI + result.rule.name.replace(/\s/g, "_");
 			const stageAPath: string = globals.ImgStagesPath + result.stage_a.name + ".jpg";
 			const stageBPath: string = globals.ImgStagesPath + result.stage_b.name + ".jpg";
+			const battleInfo: Battle.Info = Battle.getInfo(battleType);
 
 			await currentMessage.edit("(｀・ω・´)9  Just a bit more...");
 
 			let embed: Rewrap = new Rewrap();
 			embed.RichEmbed.setTitle(title);
-			embed.RichEmbed.setColor(this.COLOR[type]);
-			(type != eBattleTypes.REGULAR) && embed.RichEmbed.addField("Mode:", sprintf("[%s](%s)\n%s\n", result.rule.name, ruleUrl, localeJp["rules"][result.rule.key].name));
+			embed.RichEmbed.setColor(battleInfo.color);
+			(battleInfo.type != Battle.Types.REGULAR) && embed.RichEmbed.addField("Mode:", sprintf("[%s](%s)\n%s\n", result.rule.name, ruleUrl, localeJp["rules"][result.rule.key].name));
 
 			embed.RichEmbed
 				.addField("Time: ", sprintf("%s - %s", simplifyTime(result.start_time), simplifyTime(result.end_time)))
@@ -159,8 +124,8 @@ export class SplatoonHelper {
 
 
 			await embed.getAuthorWithImg(globals.ImgPath + this.IMG_AUTHOR, this.IMG_AUTHOR, this.NAME_AUTHOR);
-			await embed.setThumbnailImg(globals.ImgPath + this.IMG_THUMBNAIL[type], this.IMG_THUMBNAIL[type]);
-			await embed.setImgMultiple([stageAPath, stageBPath], globals.ImgOutPath + this.IMG_OUTPUT_NAME[type], this.IMG_OUTPUT_NAME[type]);
+			await embed.setThumbnailImg(globals.ImgPath + battleInfo.thumbnailImg, battleInfo.thumbnailImg);
+			await embed.setImgMultiple([stageAPath, stageBPath], globals.ImgOutPath + battleInfo.outputImg, battleInfo.outputImg);
 			await currentMessage.edit("(;;｀・ω・´)9  Almost...there...");
 			await params.msg.channel.send(embed.finalize());
 			await currentMessage.delete();

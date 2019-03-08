@@ -9,7 +9,7 @@ const readdirAsync = promisify(readdir);
 export class Commander {
 	private commandList: Map<string, CommandBase> = new Map<string, CommandBase>();
 
-	public AddCommand(commandToAdd: CommandBase): void {
+	public addCommand(commandToAdd: CommandBase): void {
 		let command: CommandBase | undefined = this.commandList.get(commandToAdd.name);
 		if (!command) {
 			this.commandList.set(commandToAdd.name, commandToAdd);
@@ -20,7 +20,7 @@ export class Commander {
 		}
 	}
 
-	public async Exec(name: string, params: CommandCallbackParams): Promise<boolean> {
+	public async exec(name: string, params: CommandCallbackParams): Promise<boolean> {
 		let command: CommandBase | undefined = this.commandList.get(name);
 		if (command) {
 			try {
@@ -34,7 +34,7 @@ export class Commander {
 		return false;
 	}
 
-		public async ParseDir(path: string): Promise<void> {
+		public async parseDir(path: string): Promise<void> {
 		let files: string[] = await readdirAsync(path);
 		for (let i: number = 0; i < files.length; ++i) {
 			let filename_split = files[i].split(/\.(.+)/);
@@ -43,7 +43,7 @@ export class Commander {
 				if (filename_split[1] == "js") {
 					let filename: string = filename_split[0];
 					let module: any = await import(`${path}${filename}`);
-					this.AddCommand(module());
+					this.addCommand(module());
 				}
 			}
 		}		

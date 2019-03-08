@@ -1,34 +1,29 @@
 ﻿
-import { SplatoonHelper, eBattleTypes } from 'responses/common/SplatoonHelper';
+import { SplatoonHelper } from 'responses/common/SplatoonHelper';
+import { Battle, Rule } from 'responses/common/SplatoonData'
 import { ResponseBase } from 'libs/Responder/ResponseBase';
 import { CallbackParams } from '../CallbackParams';
-import { getRuleByCondition, RuleInfo } from 'responses/common/SplatoonData'
+import { hasWords } from 'common/common';
 
 class cResponse extends ResponseBase {
 
-	private readonly battleType: eBattleTypes = eBattleTypes.LEAGUE;
-	private conditions: string[][] = [
-		SplatoonHelper.CONDITION_BATTLE_TYPE[this.battleType],
-		["next"],
-	];
+	private readonly battleInfo: Battle.Info = Battle.getInfo(Battle.Types.LEAGUE);
 
 	public async exec(params: CallbackParams): Promise<boolean> {
-
-
-		if (!SplatoonHelper.ConditionsProc(this.conditions, params.msg.content)) {
+		if (!hasWords(params.msg.content, this.battleInfo.conditions.concat(["next"]))) {
 			return false;
 		}
 
 		// Check for rule types
-		let ruleInfo: RuleInfo | null = getRuleByCondition(params.msg.content);
+		let ruleInfo: Rule.Info | null = Rule.getRuleByCondition(params.msg.content);
 		if (ruleInfo == null) {
 			let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next League Battle is...!";
-			await SplatoonHelper.getEmbedScheduleNext(params, title, this.battleType);
+			await SplatoonHelper.getEmbedScheduleNext(params, title, this.battleInfo.type);
 		}
 
 		else {
-			let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next League " + ruleInfo.Name + " is...!";
-			await SplatoonHelper.getEmbedScheduleNextRule(params, title, this.battleType, ruleInfo.Type);
+			let title: string = "(ﾉ≧∇≦)ﾉ ﾐ The next League " + ruleInfo.name + " is...!";
+			await SplatoonHelper.getEmbedScheduleNextRule(params, title, this.battleInfo.type, ruleInfo.type);
 		}
 
 		return true;

@@ -42,13 +42,13 @@ async function onMessage(msg: Message): Promise<void> {
 			let command: string = args[0];
 			args.shift();
 
-			if (! await commander.Exec(command, new commandCallbackParams(bot, msg, args))) {
-				await responder.Exec(new responseCallbackParams(bot, msg));
+			if (! await commander.exec(command, new commandCallbackParams(bot, msg, args))) {
+				await responder.exec(new responseCallbackParams(bot, msg));
 			}
 		}
 
 		else if (msg.content.match(/\b(karu)\b/gi)) {
-			await responder.Exec(new responseCallbackParams(bot, msg));
+			await responder.exec(new responseCallbackParams(bot, msg));
 		}
 	}
 	catch (e) {
@@ -58,8 +58,8 @@ async function onMessage(msg: Message): Promise<void> {
 
 async function onLoad(): Promise<void> {
 	try {
-		await commander.ParseDir(__dirname + '/commands/cmd/');
-		await responder.ParseDir(__dirname + '/responses/res/');
+		await commander.parseDir(__dirname + '/commands/cmd/');
+		await responder.parseDir(__dirname + '/responses/res/');
 		await bot.login(process.env.TOKEN);
 		console.info("KaruBot up and ready to work! ^^b");
 		bot.user.setActivity("type '" + prefix + " help'");
