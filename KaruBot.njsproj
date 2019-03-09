@@ -27,7 +27,6 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
     <Content Include=".gitignore" />
-    <Content Include="package-lock.json" />
     <Content Include="work\deploy\control\run.sh" />
     <Content Include="work\deploy\control\stop.sh" />
     <Content Include="work\deploy\env\env_dummy" />
@@ -94,15 +93,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="work\program\src\responses\common\SplatoonUtils.ts" />
-    <TypeScriptCompile Include="work\program\src\responses\res\15_splatoon-gachi-time.ts" />
-    <TypeScriptCompile Include="work\program\src\responses\res\17_splatoon-gachi-next.ts" />
-    <TypeScriptCompile Include="work\program\src\responses\res\19_splatoon-gachi-now.ts" />
-    <TypeScriptCompile Include="work\program\src\responses\res\25_splatoon-league-time.ts" />
-    <TypeScriptCompile Include="work\program\src\responses\res\27_splatoon-league-next.ts" />
-    <TypeScriptCompile Include="work\program\src\responses\res\29_splatoon-league-now.ts" />
-    <TypeScriptCompile Include="work\program\src\responses\res\35_splatoon-regular-time.ts" />
-    <TypeScriptCompile Include="work\program\src\responses\res\37_splatoon-regular-next.ts" />
-    <TypeScriptCompile Include="work\program\src\responses\res\39_splatoon-regular-now.ts" />
+    <TypeScriptCompile Include="work\program\src\responses\res\20_splatoon-gachi.ts" />
+    <TypeScriptCompile Include="work\program\src\responses\res\30_splatoon_league.ts" />
+    <TypeScriptCompile Include="work\program\src\responses\res\10_splatoon_regular.ts" />
     <TypeScriptCompile Include="work\program\src\responses\res\bye.ts" />
     <TypeScriptCompile Include="work\program\src\commands\cmd\help.ts" />
     <TypeScriptCompile Include="work\program\src\responses\res\hi.ts" />

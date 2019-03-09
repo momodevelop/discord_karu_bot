@@ -1,5 +1,5 @@
 ﻿// All the common shit
-import { hasWords, simplifyTime } from 'common/common';
+import { parseTime, simplifyTime } from 'common/common';
 import { RichEmbedWrapper as Rewrap } from 'common/RichEmbedWrapper';
 import { CallbackParams } from '../CallbackParams';
 import { Message} from 'discord.js';
@@ -17,6 +17,7 @@ export namespace Utils {
 	const NAME_AUTHOR: string = "Karu";
 	const URL_SPLATOON_WIKI: string = "https://splatoonwiki.org/wiki/";
 	const IMG_AUTHOR: string = "karu.png"
+
 
 	function getScheduleFuncByBattleType(battleType: Battle.Types, r: Schedule): ScheduleInfo[] {
 		let ret: ScheduleInfo[] = r.regular;
