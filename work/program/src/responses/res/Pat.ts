@@ -1,8 +1,8 @@
 ﻿import { hasWords } from 'common/Utils';
-import { ResponseBase } from 'libs/Responder/ResponseBase';
+import { ResponseBase } from 'libs/Responder/Responder';
 import { CallbackParams } from '../CallbackParams'
 
-class cResponse extends ResponseBase {
+class cResponse implements ResponseBase<CallbackParams> {
 
 	public async exec(params: CallbackParams): Promise<boolean> {
 		let c = params.msg.content;

@@ -1,20 +1,22 @@
-﻿import { ResponseBase } from './ResponseBase';
-import { ResponseCallbackParams } from './ResponseCallbackParams';
-import { readdir } from 'fs';
+﻿import { readdir } from 'fs';
 import { promisify } from 'util';
 
 const readdirAsync = promisify(readdir);
 
-// Invoker class
-export class Responder {
-	private responseList: ResponseBase[] = [];
+export interface ResponseBase<T> {
+	exec(params: T): Promise<boolean>;
+}
 
-	public addResponse(response_to_add: ResponseBase, name: string): void {
+// Invoker class
+export class Responder<T> {
+	private responseList: ResponseBase<T>[] = [];
+
+	public addResponse(response_to_add: ResponseBase<T>, name: string): void {
 		this.responseList.push(response_to_add);
 		console.info("[Responder] Added Response: " + name);
 	}
 
-	public async exec(params: ResponseCallbackParams): Promise<boolean> {
+	public async exec(params: T): Promise<boolean> {
 		for (let i = 0; i < this.responseList.length; ++i) {
 			if (await this.responseList[i].exec(params)) {
 				return true;

@@ -1,7 +1,7 @@
-﻿import { CommandBase } from 'libs/Commander/CommandBase';
+﻿import { CommandBase } from 'libs/Commander/Commander';
 import { CallbackParams } from 'commands/CallbackParams';
 
-class cCommand extends CommandBase {
+class cCommand implements CommandBase<CallbackParams> {
 	public readonly name: string = "help";
 
 	public async exec(params: CallbackParams): Promise<void> {

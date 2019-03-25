@@ -1,5 +1,5 @@
 ﻿import { parseTime, hasWords } from 'common/Utils';
-import { ResponseBase } from 'libs/Responder/ResponseBase';
+import { ResponseBase } from 'libs/Responder/Responder';
 import { CallbackParams } from '../CallbackParams';
 import { sprintf } from 'sprintf-js'
 import * as Utils from 'splatoon/Utils';
@@ -8,7 +8,7 @@ import * as Rule from 'splatoon/Rule';
 
 // Given a specific time, give the map.
 // case 1: karu gachi 10am/pm
-class cResponse extends ResponseBase {
+class cResponse implements ResponseBase<CallbackParams> {
 
 	private readonly battleInfo: Battle.Info = Battle.getInfo(Battle.Types.REGULAR);
 

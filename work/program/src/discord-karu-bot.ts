@@ -7,14 +7,14 @@ import { Client, Message } from 'discord.js';
 import { Commander } from 'libs/Commander/Commander';
 import { Responder } from 'libs/Responder/Responder';
 import { globals } from 'globals/Globals';
-import { CallbackParams as commandCallbackParams } from 'commands/CallbackParams';
-import { CallbackParams as responseCallbackParams } from 'responses/CallbackParams';
+import { CallbackParams as CommandCallbackParams } from 'commands/CallbackParams';
+import { CallbackParams as ResponseCallbackParams, CallbackParams } from 'responses/CallbackParams';
 
 //Set up global variables /////////////////////
 globals.Root = __dirname + "/";
 
-let commander: Commander = new Commander();
-let responder: Responder = new Responder();
+let commander: Commander<CommandCallbackParams> = new Commander();
+let responder: Responder<ResponseCallbackParams> = new Responder();
 
 // Discord bot ////////////////////////////
 const prefix: string = process.env.PREFIX || "";
@@ -42,13 +42,13 @@ async function onMessage(msg: Message): Promise<void> {
 			let command: string = args[0];
 			args.shift();
 
-			if (! await commander.exec(command, new commandCallbackParams(bot, msg, args))) {
-				await responder.exec(new responseCallbackParams(bot, msg));
+			if (! await commander.exec(command, { bot, msg, args })) {
+				await responder.exec({bot, msg});
 			}
 		}
 
 		else if (msg.content.match(/\b(karu)\b/gi)) {
-			await responder.exec(new responseCallbackParams(bot, msg));
+			await responder.exec({bot, msg});
 		}
 	}
 	catch (e) {

@@ -1,16 +1,19 @@
-﻿import { CommandBase } from './CommandBase';
-import { CommandCallbackParams } from './CommandCallbackParams';
-import { readdir } from 'fs';
+﻿import { readdir } from 'fs';
 import { promisify } from 'util';
 
 const readdirAsync = promisify(readdir);
 
-// Invoker class
-export class Commander {
-	private commandList: Map<string, CommandBase> = new Map<string, CommandBase>();
+export interface CommandBase<T> {
+	readonly name: string;
+	exec(params: T): Promise<void>;
+}
 
-	public addCommand(commandToAdd: CommandBase): void {
-		let command: CommandBase | undefined = this.commandList.get(commandToAdd.name);
+// Invoker class
+export class Commander<T> {
+	private commandList: Map<string, CommandBase<T>> = new Map<string, CommandBase<T>>();
+
+	public addCommand(commandToAdd: CommandBase<T>): void {
+		let command: CommandBase<T> | undefined = this.commandList.get(commandToAdd.name);
 		if (!command) {
 			this.commandList.set(commandToAdd.name, commandToAdd);
 			console.info("[Commander] Added Command: " + commandToAdd.name);
@@ -20,8 +23,8 @@ export class Commander {
 		}
 	}
 
-	public async exec(name: string, params: CommandCallbackParams): Promise<boolean> {
-		let command: CommandBase | undefined = this.commandList.get(name);
+	public async exec(name: string, params: T): Promise<boolean> {
+		let command: CommandBase<T> | undefined = this.commandList.get(name);
 		if (command) {
 			try {
 				await command.exec(params);
@@ -34,7 +37,7 @@ export class Commander {
 		return false;
 	}
 
-	public async parseDir(path: string): Promise<void> {
+		public async parseDir(path: string): Promise<void> {
 		let files: string[] = await readdirAsync(path);
 		for (let i: number = 0; i < files.length; ++i) {
 			let filename_split = files[i].split(/\.(.+)/);
