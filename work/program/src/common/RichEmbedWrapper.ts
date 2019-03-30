@@ -1,7 +1,7 @@
 ﻿import { RichEmbed } from 'discord.js';
 import { fileExists } from './Utils';
 import { jimpWriteAsync } from './Promisify';
-import * as mergeImg from 'merge-img';
+import mergeImg from 'merge-img';
 import Jimp from 'jimp-custom';
 
 interface Files {

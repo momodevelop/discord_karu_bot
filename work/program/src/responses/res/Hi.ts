@@ -17,6 +17,6 @@ class cResponse implements ResponseBase<CallbackParams> {
 	}
 }
 
-export = function () {
+export default function () {
 	return new cResponse();
 }

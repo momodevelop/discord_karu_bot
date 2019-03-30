@@ -35,7 +35,7 @@ export class Responder<T> {
 				if (filename_split[1] == "js") {
 					let filename: string = filename_split[0];
 					let module: any = await import(`${path}${filename}`);
-					this.addResponse(module(), filename);
+					this.addResponse(module.default(), filename);
 				}
 			}
 		}

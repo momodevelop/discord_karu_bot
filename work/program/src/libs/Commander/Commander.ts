@@ -46,7 +46,7 @@ export class Commander<T> {
 				if (filename_split[1] == "js") {
 					let filename: string = filename_split[0];
 					let module: any = await import(`${path}${filename}`);
-					this.addCommand(module());
+					this.addCommand(module.default());
 				}
 			}
 		}		

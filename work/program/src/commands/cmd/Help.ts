@@ -9,6 +9,6 @@ class cCommand implements CommandBase<CallbackParams> {
 	}
 }
 
-export = function () {
+export default function () {
 	return new cCommand();
 }

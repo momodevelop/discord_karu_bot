@@ -1,5 +1,4 @@
 ﻿// Globals ////////////////////////////////
-require('dotenv').config();
 require('app-module-path').addPath(__dirname);
 
 // Load libs ////////////////////////////////
@@ -9,6 +8,7 @@ import { Responder } from 'libs/Responder/Responder';
 import { globals } from 'globals/Globals';
 import { CallbackParams as CommandCallbackParams } from 'commands/CallbackParams';
 import { CallbackParams as ResponseCallbackParams, CallbackParams } from 'responses/CallbackParams';
+import config from 'config.json'
 
 //Set up global variables /////////////////////
 globals.Root = __dirname + "/";
@@ -17,7 +17,7 @@ let commander: Commander<CommandCallbackParams> = new Commander();
 let responder: Responder<ResponseCallbackParams> = new Responder();
 
 // Discord bot ////////////////////////////
-const prefix: string = process.env.PREFIX || "";
+const prefix: string = config.prefix || "";
 if (prefix == "") {
 	console.error("Prefix not defined!")
 	process.exit(0);
@@ -60,7 +60,7 @@ async function onLoad(): Promise<void> {
 	try {
 		await commander.parseDir(__dirname + '/commands/cmd/');
 		await responder.parseDir(__dirname + '/responses/res/');
-		await bot.login(process.env.TOKEN);
+		await bot.login(config.token);
 		console.info("KaruBot up and ready to work! ^^b");
 		bot.user.setActivity("type '" + prefix + " help'");
 		bot.on('message', onMessage);

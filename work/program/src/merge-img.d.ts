@@ -4,4 +4,4 @@ declare function mergeImg(images: string[], ...args: any[]): Jimp;
 declare namespace mergeImg {
 }
 
-export = mergeImg;
+export default mergeImg;

@@ -1,5 +1,6 @@
 ﻿//import { cJsonDBBotify } from 'libs/JsonDB/cJsonDBBotify'
 import { SplatoonInkApi } from 'libs/SplatoonInkApi/SplatoonInkApi'
+import config from 'config.json'
 
 class Globals {
 	/*private _jsonDbBotify: cJsonDBBotify = new cJsonDBBotify();
@@ -23,15 +24,15 @@ class Globals {
 	}
 
 	public get ImgPath(): string {
-		return this._root + process.env.IMG_PATH;
+		return this._root + config.imgPath;
 	}
 
 	public get ImgStagesPath(): string {
-		return this._root + process.env.IMG_PATH + "stages/";
+		return this._root + config.imgPath + "stages/";
 	}
 
 	public get ImgOutPath(): string {
-		return this._root + process.env.IMG_PATH + "out/";
+		return this._root + config.imgPath + "out/";
 	}
 };
 
