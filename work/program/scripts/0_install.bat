@@ -1,7 +1,8 @@
 @echo off
 Pushd "%~dp0"
 
-set MODULES=merge-img discord.js sprintf-js request request-promise-native app-module-path @types/sprintf-js @types/request-promise-native @types/node @types/core-js jimp
+
+set MODULES=merge-img@2.1.3 discord.js@11.4.2 sprintf-js@1.1.2 request@2.88.0 request-promise-native@1.0.7 app-module-path@2.2.0 @types/sprintf-js@1.1.2 @types/request-promise-native@1.0.15 @types/node@11.12.2 @types/core-js@2.5.0 jimp@0.6.1
 
 cd ..
 echo Uninstalling modules...
