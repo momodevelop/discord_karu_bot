@@ -9,7 +9,7 @@ class cResponse implements ResponseBase<CallbackParams> {
 		let f = hasWords;
 		let c = params.msg.content;
 		if (hasWords(c, ["hi", "hello", "yo"])) {
-			params.msg.channel.send(randMsg());
+			await params.msg.channel.send(randMsg());
 			return true;
 		}
 

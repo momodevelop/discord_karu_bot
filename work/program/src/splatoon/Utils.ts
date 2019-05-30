@@ -8,7 +8,7 @@ import { globals } from 'globals/Globals'
 import { sprintf } from 'sprintf-js';
 import * as Rule from './Rule';
 import * as Battle from './Battle';
-
+import * as Map from 'splatoon/Map';
 
 const NAME_AUTHOR: string = "Karu";
 const URL_SPLATOON_WIKI: string = "https://splatoonwiki.org/wiki/";
@@ -122,6 +122,23 @@ export async function getEmbedSchedule(msg: Message, title: string, battleType: 
 }
 
 
+export async function getEmbedCallout(msg: Message, title: string, mapKey: string): Promise<void>  {
+	let info = Map.getMap(mapKey);
+	if (info) {
+		let embed: Rewrap = new Rewrap();
+		embed.RichEmbed.setTitle(title);
+		embed.RichEmbed.setColor(0xFFFFFF);
+		embed.RichEmbed.addField("Name:", sprintf("%s\n%s", info.enName, info.jpName));
+
+		await embed.getAuthorWithImg(globals.ImgPath + IMG_AUTHOR, IMG_AUTHOR, NAME_AUTHOR);
+		//await embed.setThumbnailImg(globals.ImgPath + battleInfo.thumbnailImg, battleInfo.thumbnailImg);
+		//await embed.setImgMultiple([stageAPath, stageBPath], globals.ImgOutPath + battleInfo.outputImg, battleInfo.outputImg);
+		await msg.channel.send(embed.finalize());
+	}
+	else {
+		await msg.channel.send("I can't find the map...(´・ω・`)");
+	}
+}
 
 
 

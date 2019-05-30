@@ -7,7 +7,7 @@ class cResponse implements ResponseBase<CallbackParams> {
 	public async exec(params: CallbackParams): Promise<boolean> {
 		let c = params.msg.content;
 		if (hasWords(c, ["pat", "pet", "pats", "pets"])) {
-			params.msg.channel.send("Ehehe :kissing_smiling_eyes:");
+			await params.msg.channel.send("Ehehe :kissing_smiling_eyes:");
 			return true;
 		}
 		return false;
