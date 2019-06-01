@@ -34,6 +34,10 @@ class Globals {
 	public get ImgOutPath(): string {
 		return this._root + config.imgPath + "out/";
 	}
+
+	public get ImgCalloutPath(): string {
+		return this._root + config.imgPath + "callout/"
+	}
 };
 
 export let globals: Globals = new Globals(); 

@@ -133,6 +133,7 @@ export async function getEmbedCallout(msg: Message, title: string, mapKey: strin
 		await embed.getAuthorWithImg(globals.ImgPath + IMG_AUTHOR, IMG_AUTHOR, NAME_AUTHOR);
 		//await embed.setThumbnailImg(globals.ImgPath + battleInfo.thumbnailImg, battleInfo.thumbnailImg);
 		//await embed.setImgMultiple([stageAPath, stageBPath], globals.ImgOutPath + battleInfo.outputImg, battleInfo.outputImg);
+		await embed.setImg(globals.ImgCalloutPath + info.filename, info.filename);
 		await msg.channel.send(embed.finalize());
 	}
 	else {
