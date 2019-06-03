@@ -9,6 +9,7 @@ import { sprintf } from 'sprintf-js';
 import * as Rule from './Rule';
 import * as Battle from './Battle';
 import * as Map from 'splatoon/Map';
+import { start } from 'repl';
 
 const NAME_AUTHOR: string = "Karu";
 const URL_SPLATOON_WIKI: string = "https://splatoonwiki.org/wiki/";
@@ -34,10 +35,12 @@ export async function getEmbedScheduleByTime(msg: Message, title: string, battle
 		let index = -1;
 		// assumes that info time is form earliest of latest.
 		for (let i = 0; i < info.length; ++i) {
-			let timeDiff: number = info[i].end_time * 1000 - date.getTime();
-			if (timeDiff > 0) {
+			let endTime: Date = new Date(info[i].end_time * 1000);
+			let startTime: Date = new Date(info[i].start_time * 1000);
+			if (date.getHours() < endTime.getHours() && date.getHours() >= startTime.getHours()) {
 				index = i;
 				break;
+
 			}
 		}
 		return index;
