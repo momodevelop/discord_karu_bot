@@ -127,8 +127,8 @@ export async function getEmbedCallout(msg: Message, title: string, mapKey: strin
 	if (info) {
 		let embed: Rewrap = new Rewrap();
 		embed.RichEmbed.setTitle(title);
-		embed.RichEmbed.setColor(0xFFFFFF);
-		embed.RichEmbed.addField("Name:", sprintf("%s\n%s", info.enName, info.jpName));
+		embed.RichEmbed.setColor(0x40f76b);
+		embed.RichEmbed.addField("Map Name:", sprintf("%s\n%s", info.enName, info.jpName));
 
 		await embed.getAuthorWithImg(globals.ImgPath + IMG_AUTHOR, IMG_AUTHOR, NAME_AUTHOR);
 		//await embed.setThumbnailImg(globals.ImgPath + battleInfo.thumbnailImg, battleInfo.thumbnailImg);
