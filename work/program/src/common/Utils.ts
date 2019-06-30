@@ -55,6 +55,9 @@ export function parseTime(timeString: string): Date | null {
 	if (hours < 12 && pm) {
 		hours += 12;
 	}
+	if (!pm && hours == 12) { // for 12AM
+		hours = 0;
+	}
 	var d = new Date(0);
 	d.setHours(hours);
 	d.setMinutes(minutes);

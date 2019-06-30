@@ -1,8 +1,7 @@
 ﻿
 const messages: string[] = [
-	"Byeeeeee~!",
+	"Byeeeeee~! XDDD",
 	"Noooooooo come back!! Okay...bye...TvT",
-
 ]
 
 export function randMsg(): string {

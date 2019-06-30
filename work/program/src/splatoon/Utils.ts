@@ -37,7 +37,16 @@ export async function getEmbedScheduleByTime(msg: Message, title: string, battle
 		for (let i = 0; i < info.length; ++i) {
 			let endTime: Date = new Date(info[i].end_time * 1000);
 			let startTime: Date = new Date(info[i].start_time * 1000);
-			if (date.getHours() < endTime.getHours() && date.getHours() >= startTime.getHours()) {
+
+			let endTimeHours = endTime.getHours();
+			let startTimeHours = startTime.getHours();
+
+			// special case for 2200 to 0000
+			if (endTimeHours == 0 && startTimeHours == 22) {
+				endTimeHours = 24;
+			} 
+
+			if (date.getHours() < endTimeHours && date.getHours() >= startTimeHours) {
 				index = i;
 				break;
 
