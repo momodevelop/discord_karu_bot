@@ -7,5 +7,5 @@ rotations of the Nintendo game Splatoon 2.
 - Able to show schedules of Normal, Ranked and League and its map rotations
 - Able to show schedules based on time in the next 24 hours.
 - Tries to capture human language, instead of being command based
--- e.g. Karu, what's on league at 2pm?
--- e.g. When is the next Tower Control League?
+> e.g. Karu, what's on league at 2pm?
+> e.g. When is the next Tower Control League?
