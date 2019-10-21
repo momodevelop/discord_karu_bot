@@ -1,38 +1,11 @@
-# Getting Started 
+# Discord Karu Bot
 
-##To work on SuiBot, you must have nodeJS already installed on your computer
+A simple Discord Bot written in nodeJS that will tell you the current map 
+rotations of the Nintendo game Splatoon 2.
 
-https://nodejs.org/en/download
-
-
-##Install the dependancies from NPM using:##
-
-`$ .\install.bat`
-
-
-##Running tests:##
-
-1. Install mocha to your computer
-
-: `$ npm install -g mocha`
-
-
-2. Compile everything in src folder to out folder:
-
-: `$ tsc`
-
-3. Run the tests
-
-: `$ mocha .\out\tests\test-sui`
-
-
-##Running SuiBot:##
-
-1. Compile everything in src folder to out folder:
-
-: `$ tsc`
-
-
-2. Run
-
-: `$ .\run.bat`
+## Features
+- Able to show schedules of Normal, Ranked and League and its map rotations
+- Able to show schedules based on time in the next 24 hours.
+- Tries to capture human language, instead of being command based
+-- e.g. Karu, what's on league at 2pm?
+-- e.g. When is the next Tower Control League?
