@@ -45,19 +45,20 @@ export function parseTime(timeString: string): Date | null {
 	// ignore ':'
 	// [2] two numbers
 	// [3] p?
-	let time: RegExpMatchArray | null = timeString.match(/(\d{1,2}):?(\d\d)?\s*(p?)/i);
+	let time: RegExpMatchArray | null = timeString.match(/(\d{1,2}):?(\d\d)?\s*(pm|am?)?/i);
 	if (time == null)
 		return null;
 
 	let hours: number = parseInt(time[1], 10);
 	let minutes: number = parseInt(time[2], 10) || 0;
-	let pm: boolean = time[3] != null && time[3].length > 0;
-	if (hours < 12 && pm) {
+
+	if (hours < 12 && time[3] == "pm") {
 		hours += 12;
 	}
-	if (!pm && hours == 12) { // for 12AM
+	if (time[3] =="am" && hours == 12) { // for 12AM
 		hours = 0;
 	}
+	
 	var d = new Date(0);
 	d.setHours(hours);
 	d.setMinutes(minutes);

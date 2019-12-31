@@ -38,6 +38,10 @@ class Globals {
 	public get ImgCalloutPath(): string {
 		return this._root + config.imgPath + "callout/"
 	}
+
+	public get ImgWeaponPath(): string {
+		return this._root + config.imgPath + "weapons/"
+	}
 };
 
 export let globals: Globals = new Globals(); 

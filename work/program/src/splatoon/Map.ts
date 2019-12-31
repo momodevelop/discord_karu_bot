@@ -11,7 +11,7 @@ mapList.set("mainstage",	{filename: "mainstage.png", 	enName: "Starfish MainStag
 mapList.set("humpback", 	{filename: "humpback.png", 		enName: "Humpback Pump Track", 		jpName: "コンブトラック"});
 mapList.set("academy", 		{filename: "academy.png", 		enName: "Inkblot Art Academy", 		jpName: "海女美術大学"});
 mapList.set("shipyard",		{filename: "shipyard.png", 		enName: "Sturgeon Shipyard", 		jpName: "チョウザメ造船"});
-mapList.set("towers", 		{filename: "tower.png", 		enName: "Moray Towers", 			jpName: "タチウオパーキング"});
+mapList.set("towers", 		{filename: "towers.png", 		enName: "Moray Towers", 			jpName: "タチウオパーキング"});
 mapList.set("port", 		{filename: "port.png", 			enName: "Port Mackerel", 			jpName: "ホッケふ頭"});
 mapList.set("manta",		{filename: "manta.png", 		enName: "Manta Maria", 				jpName: "マンタマリア号"});
 mapList.set("dome", 		{filename: "dome.png",			enName: "Kelp Dome", 				jpName: "モズク農園"});

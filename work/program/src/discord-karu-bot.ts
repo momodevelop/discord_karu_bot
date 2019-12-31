@@ -16,6 +16,7 @@ globals.Root = __dirname + "/";
 let commander: Commander<CommandCallbackParams> = new Commander();
 let responder: Responder<ResponseCallbackParams> = new Responder();
 
+
 // Discord bot ////////////////////////////
 const prefix: string = config.prefix || "";
 if (prefix == "") {

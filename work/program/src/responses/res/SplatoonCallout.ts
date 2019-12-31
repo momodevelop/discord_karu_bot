@@ -20,7 +20,6 @@ async function replyWithMapList(msg: Message) {
 
 class cResponse implements ResponseBase<CallbackParams> {
 
-	private readonly battleInfo: Battle.Info = Battle.getInfo(Battle.Types.GACHI);
 	public async exec(params: CallbackParams): Promise<boolean> {
 		if (!hasWords(params.msg.content, ["callout"])) {
 			return false;
