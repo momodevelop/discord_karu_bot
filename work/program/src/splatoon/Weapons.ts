@@ -62,7 +62,7 @@ weaponList.set("H-3 Nozzlenose", 	{filename: "90px-S2_Weapon_Main_H-3_Nozzlenose
 weaponList.set("H-3 Nozzlenose D", 	{filename: "90px-S2_Weapon_Main_H-3_Nozzlenose_D.png",		enName: "H-3 Nozzlenose D", 		jpName: ""});
 weaponList.set("Heavy Splatling", 	{filename: "90px-S2_Weapon_Main_Heavy_Splatling.png",		enName: "Heavy Splatling", 		jpName: ""});
 weaponList.set("Heavy Splatling Deco", 	{filename: "90px-S2_Weapon_Main_Heavy_Splatling_Deco.png",		enName: "Heavy Splatling", 		jpName: ""});
-weaponList.set("Heavy Splatling Remax", 	{filename: "90px-S2_Weapon_Main_Heavy_Splatling_Remix.png",		enName: "Heavy Splatling Remix", 		jpName: ""});
+weaponList.set("Heavy Splatling Remix", 	{filename: "90px-S2_Weapon_Main_Heavy_Splatling_Remix.png",		enName: "Heavy Splatling Remix", 		jpName: ""});
 
 
 export function getWeapon(key: string): WeaponInfo | undefined {
