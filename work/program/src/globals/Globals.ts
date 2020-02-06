@@ -1,16 +1,17 @@
 ﻿//import { cJsonDBBotify } from 'libs/JsonDB/cJsonDBBotify'
-import { cSplatoonInkApi } from 'libs/SplatoonInkApi/cSplatoonInkApi'
+import { SplatoonInkApi } from 'libs/SplatoonInkApi/SplatoonInkApi'
+import config from 'config.json'
 
-class cGlobals {
+class Globals {
 	/*private _jsonDbBotify: cJsonDBBotify = new cJsonDBBotify();
 
 	public get JsonDb(): cJsonDBBotify {
 		return this._jsonDbBotify;
 	}*/
 
-	private _splatoonInkApi: cSplatoonInkApi = new cSplatoonInkApi();
+	private _splatoonInkApi: SplatoonInkApi = new SplatoonInkApi();
 
-	public get SplatoonInkApi(): cSplatoonInkApi {
+	public get SplatoonInkApi(): SplatoonInkApi {
 		return this._splatoonInkApi;
 	}
 
@@ -23,16 +24,24 @@ class cGlobals {
 	}
 
 	public get ImgPath(): string {
-		return this._root + process.env.IMG_PATH;
+		return this._root + config.imgPath;
 	}
 
 	public get ImgStagesPath(): string {
-		return this._root + process.env.IMG_PATH + "stages/";
+		return this._root + config.imgPath + "stages/";
 	}
 
 	public get ImgOutPath(): string {
-		return this._root + process.env.IMG_PATH + "out/";
+		return this._root + config.imgPath + "out/";
+	}
+
+	public get ImgCalloutPath(): string {
+		return this._root + config.imgPath + "callout/"
+	}
+
+	public get ImgWeaponPath(): string {
+		return this._root + config.imgPath + "weapons/"
 	}
 };
 
-export let Globals: cGlobals = new cGlobals(); 
+export let globals: Globals = new Globals(); 

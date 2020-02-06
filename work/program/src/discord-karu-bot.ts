@@ -1,74 +1,77 @@
 ﻿// Globals ////////////////////////////////
-require('dotenv').config();
 require('app-module-path').addPath(__dirname);
 
 // Load libs ////////////////////////////////
 import { Client, Message } from 'discord.js';
-import { cCommander } from 'libs/Commander/cCommander';
-import { cResponder } from 'libs/Responder/cResponder';
-import { Globals } from 'globals/Globals';
-import { cCallbackParams as commandCallbackParams } from 'commands/cCallbackParams';
-import { cCallbackParams as responseCallbackParams } from 'responses/cCallbackParams';
-import { common } from 'common/common';
-
-// Load messagees /////////////////////////////
-import { rand_msg as msg_default } from 'messages/MsgArrayDefault'
+import { Commander } from 'libs/Commander/Commander';
+import { Responder } from 'libs/Responder/Responder';
+import { globals } from 'globals/Globals';
+import { CallbackParams as CommandCallbackParams } from 'commands/CallbackParams';
+import { CallbackParams as ResponseCallbackParams, CallbackParams } from 'responses/CallbackParams';
+import config from 'config.json'
 
 //Set up global variables /////////////////////
-Globals.Root = __dirname + "/";
+globals.Root = __dirname + "/";
 
+let commander: Commander<CommandCallbackParams> = new Commander();
+let responder: Responder<ResponseCallbackParams> = new Responder();
 
-// Commander ////////////////////////////////////
-let commander: cCommander = new cCommander();
-commander.ParseDir(__dirname + '/commands/cmd/');
-
-// Responder //////////////////////////////////
-let responder: cResponder = new cResponder();
-responder.ParseDir(__dirname + '/responses/res/');
 
 // Discord bot ////////////////////////////
-const prefix = "karu"
+const prefix: string = config.prefix || "";
+if (prefix == "") {
+	console.error("Prefix not defined!")
+	process.exit(0);
+}
 const bot: Client = new Client();
 
 async function onMessage(msg: Message): Promise<void> {
-	// reject self
-	if (msg.author.id === bot.user.id) {
-		return;
-	}
-	
-	if (msg.content.startsWith(prefix)) {
-		console.info('I\'m called! -> ' + msg.content);
-
-		let args: string[] = msg.content.substring(prefix.length).match(/(?:[^\s"]+\b|(")[^"]*("))+|[=!&|~]/g) || [];
-		if (!args.length) {
+	try {
+		// reject self
+		if (msg.author.id === bot.user.id) {
 			return;
 		}
 
-		let command: string = args[0];
-		args.shift();
+		if (msg.content.startsWith(prefix)) {
+			console.info('I\'m called! -> ' + msg.content);
 
-		if (! await commander.Exec(command, new commandCallbackParams(bot, msg, args))) {
-			await responder.Exec(new responseCallbackParams(bot, msg));
+			let args: string[] = msg.content.substring(prefix.length).match(/(?:[^\s"]+\b|(")[^"]*("))+|[=!&|~]/g) || [];
+			if (!args.length) {
+				return;
+			}
+
+			let command: string = args[0];
+			args.shift();
+
+			if (! await commander.exec(command, { bot, msg, args })) {
+				await responder.exec({bot, msg});
+			}
+		}
+
+		else if (msg.content.match(/\b(karu)\b/gi)) {
+			await responder.exec({bot, msg});
 		}
 	}
-
-	else if (msg.content.match(/\b(karu)\b/gi)) {
-		await responder.Exec(new responseCallbackParams(bot, msg));
+	catch (e) {
+		console.error(e)
 	}
-
-	return;
 }
 
-
-bot.login(process.env.TOKEN)
-	.then(() => {
+async function onLoad(): Promise<void> {
+	try {
+		await commander.parseDir(__dirname + '/commands/cmd/');
+		await responder.parseDir(__dirname + '/responses/res/');
+		await bot.login(config.token);
 		console.info("KaruBot up and ready to work! ^^b");
-		bot.user.setActivity("type 'karu help'");
+		bot.user.setActivity("type '" + prefix + " help'");
 		bot.on('message', onMessage);
-	})
-	.catch((e: any) => {
+	}
+	catch (e) {
 		console.info(e);
 		process.exit(0);
-	});
+	}
+}
+
+onLoad();
 
 
