@@ -16,3 +16,4 @@ rotations of the Nintendo game Splatoon 2.
 * nodeJS
 * DiscordJS
 * JSON
+* Typescript
