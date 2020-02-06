@@ -12,7 +12,7 @@ rotations of the Nintendo game Splatoon 2.
     * e.g. When is the next Tower Control League?
     * e.g. Karu, gimme a random weapon!
 
-#Tecnologies used
+# Technologies used
 * nodeJS
 * DiscordJS
 * JSON
