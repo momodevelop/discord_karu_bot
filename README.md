@@ -1,5 +1,7 @@
 # Discord Karu Bot
 
+*NOTE: This project is completed and is no longer maintained because Splatoon 3 is out and because Discord no longer allow my cheap bots to listen to messages in channels. Feel free to reference the code and perhaps build a bot that will be popular enough for Discord to allow that feature for you :)*
+
 A simple Discord Bot written in nodeJS that will tell you the current map 
 rotations of the Nintendo game Splatoon 2.
 
